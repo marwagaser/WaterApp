@@ -46,6 +46,9 @@
     </ion-text>
 
     <br />
+
+    <!-- end of username -->
+
     <ion-item>
       <ion-label position="floating">Name</ion-label>
       <ion-input
@@ -86,6 +89,48 @@
     </ion-text>
 
     <br />
+
+    <!-- end of name -->
+    <ion-item>
+      <ion-label position="floating">Region</ion-label>
+      <ion-input type="text" formControlName="region"></ion-input>
+    </ion-item>
+    <ion-text
+      color="danger"
+      *ngIf="
+        signupForm.get('region').errors?.required &&
+        signupForm.get('region').touched
+      "
+    >
+      Please insert your region details
+    </ion-text>
+
+    <ion-text
+      color="danger"
+      *ngIf="
+        signupForm.get('region').errors?.pattern &&
+        signupForm.get('region').touched &&
+        !signupForm.get('region').errors?.required
+      "
+    >
+      Your region should be alphanumeric.
+    </ion-text>
+
+    <ion-text
+      color="danger"
+      *ngIf="
+        signupForm.get('region').errors?.minlength &&
+        signupForm.get('region').touched &&
+        !signupForm.get('region').errors?.pattern &&
+        !signupForm.get('region').errors?.required
+      "
+    >
+      Your region is too short.
+    </ion-text>
+
+    <br />
+
+    <!-- end of region -->
     <ion-item>
       <ion-label position="floating">Building Number</ion-label>
       <ion-input type="number" formControlName="buildingNumber"></ion-input>
@@ -113,6 +158,8 @@
 
     <br />
 
+    <!-- end of building number -->
+
     <ion-item>
       <ion-label position="floating">Password</ion-label>
       <ion-input type="password" formControlName="password"></ion-input>
@@ -127,17 +174,6 @@
       Password is required.
     </ion-text>
 
-    <!-- <ion-text
-      color="danger"
-      *ngIf="
-        signupForm.get('password').errors?.pattern &&
-        signupForm.get('password').touched &&
-        !signupForm.get('password').errors?.required
-      "
-    >
-      Your password should include a combination of upper and lower case
-      letters, at least one special character, and a number.
-    </ion-text> -->
     <ion-text
       color="danger"
       *ngIf="
@@ -150,6 +186,7 @@
     </ion-text>
     <br />
 
+    <!-- end of password -->
     <ion-item>
       <ion-label position="floating">Confirm Password</ion-label>
       <ion-input type="password" formControlName="confirmpassword"></ion-input>
@@ -182,6 +219,5 @@
     <ion-button expand="block" color="primary" (click)="login()"
       >Login</ion-button
     >
-    <ion-text color="danger"> {{ formNotValid }}</ion-text>
   </form>
 </ion-content>

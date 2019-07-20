@@ -28,6 +28,14 @@ export class HomePage implements OnInit {
           Validators.minLength(3)
         ]
       ],
+      region: [
+        "",
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.pattern("^[a-zA-Z0-9 ]*$")
+        ]
+      ],
 
       buildingNumber: [
         "",
@@ -82,6 +90,15 @@ export class HomePage implements OnInit {
               Validators.required,
               Validators.pattern("^[a-zA-Z]*$"),
               Validators.minLength(3)
+            ]
+          ],
+
+          region: [
+            "",
+            [
+              Validators.required,
+              Validators.minLength(3),
+              Validators.pattern("^[a-zA-Z0-9 ]*$")
             ]
           ],
 
