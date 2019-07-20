@@ -1,0 +1,187 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title color="primary"> Registration</ion-title>
+  </ion-toolbar>
+</ion-header>
+<br />
+<br />
+
+<ion-content>
+  <form [formGroup]="signupForm">
+    <ion-item>
+      <ion-label position="floating">Username</ion-label>
+      <ion-input type="text" formControlName="username"></ion-input>
+    </ion-item>
+    <ion-text
+      color="danger"
+      *ngIf="
+        signupForm.get('username').errors?.required &&
+        signupForm.get('username').touched
+      "
+    >
+      Please insert your username
+    </ion-text>
+
+    <ion-text
+      color="danger"
+      *ngIf="
+        signupForm.get('username').errors?.pattern &&
+        signupForm.get('username').touched &&
+        !signupForm.get('username').errors?.required
+      "
+    >
+      Your username can contian alphabets, _, and numbers only.
+    </ion-text>
+
+    <ion-text
+      color="danger"
+      *ngIf="
+        signupForm.get('username').errors?.minlength &&
+        signupForm.get('username').touched &&
+        !signupForm.get('username').errors?.pattern &&
+        !signupForm.get('username').errors?.required
+      "
+    >
+      Your username is too short.
+    </ion-text>
+
+    <br />
+    <ion-item>
+      <ion-label position="floating">Name</ion-label>
+      <ion-input
+        type="text"
+        inputmode="text"
+        formControlName="name"
+      ></ion-input>
+    </ion-item>
+    <ion-text
+      color="danger"
+      *ngIf="
+        signupForm.get('name').errors?.required &&
+        signupForm.get('name').touched
+      "
+    >
+      Your Name is required.
+    </ion-text>
+
+    <ion-text
+      color="danger"
+      *ngIf="
+        signupForm.get('name').errors?.pattern &&
+        signupForm.get('name').touched &&
+        !signupForm.get('name').errors?.required
+      "
+    >
+      Your Name should contain alphabets only.
+    </ion-text>
+    <ion-text
+      color="danger"
+      *ngIf="
+        signupForm.get('name').errors?.minlength &&
+        signupForm.get('name').touched &&
+        !signupForm.get('name').errors?.pattern
+      "
+    >
+      Your name is too short.
+    </ion-text>
+
+    <br />
+    <ion-item>
+      <ion-label position="floating">Building Number</ion-label>
+      <ion-input type="number" formControlName="buildingNumber"></ion-input>
+    </ion-item>
+    <ion-text
+      color="danger"
+      *ngIf="
+        signupForm.get('buildingNumber').errors?.required &&
+        signupForm.get('buildingNumber').touched
+      "
+    >
+      Your required to specify your building number.
+    </ion-text>
+    <ion-text
+      color="danger"
+      *ngIf="
+        (signupForm.get('buildingNumber').errors?.max &&
+          signupForm.get('buildingNumber').touched) ||
+        (signupForm.get('buildingNumber').errors?.min &&
+          signupForm.get('buildingNumber').touched)
+      "
+    >
+      Your building number should be between 1 and 999.
+    </ion-text>
+
+    <br />
+
+    <ion-item>
+      <ion-label position="floating">Password</ion-label>
+      <ion-input type="password" formControlName="password"></ion-input>
+    </ion-item>
+    <ion-text
+      color="danger"
+      *ngIf="
+        signupForm.get('password').errors?.required &&
+        signupForm.get('password').touched
+      "
+    >
+      Password is required.
+    </ion-text>
+
+    <!-- <ion-text
+      color="danger"
+      *ngIf="
+        signupForm.get('password').errors?.pattern &&
+        signupForm.get('password').touched &&
+        !signupForm.get('password').errors?.required
+      "
+    >
+      Your password should include a combination of upper and lower case
+      letters, at least one special character, and a number.
+    </ion-text> -->
+    <ion-text
+      color="danger"
+      *ngIf="
+        signupForm.get('password').errors?.minlength &&
+        signupForm.get('password').touched &&
+        !signupForm.get('password').errors?.pattern
+      "
+    >
+      Your password is too short.
+    </ion-text>
+    <br />
+
+    <ion-item>
+      <ion-label position="floating">Confirm Password</ion-label>
+      <ion-input type="password" formControlName="confirmpassword"></ion-input>
+    </ion-item>
+    <ion-text
+      color="danger"
+      *ngIf="
+        signupForm.get('confirmpassword').touched &&
+        signupForm.get('confirmpassword').errors?.required
+      "
+    >
+      Please re-enter your password.
+    </ion-text>
+    <ion-text
+      color="danger"
+      *ngIf="
+        signupForm.get('confirmpassword').errors?.MatchPassword &&
+        signupForm.get('confirmpassword').touched &&
+        !signupForm.get('confirmpassword').errors?.required
+      "
+    >
+      Password and confirm password do not match.</ion-text
+    >
+    <br />
+    <br />
+    <br />
+    <ion-button expand="block" color="medium" (click)="register()"
+      >Register</ion-button
+    >
+    <ion-button expand="block" color="primary" (click)="login()"
+      >Login</ion-button
+    >
+    <ion-text color="danger"> {{ formNotValid }}</ion-text>
+  </form>
+</ion-content>
