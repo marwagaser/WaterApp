@@ -3,8 +3,10 @@ import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 
 const routes: Routes = [
   { path: "", redirectTo: "home", pathMatch: "full" },
-  { path: "home", loadChildren: "./pages/home/home.module#HomePageModule" },
-  { path: "login", loadChildren: "./pages/login/login.module#LoginPageModule" }
+  { path: "", loadChildren: "./tabs/tabs.module#TabsPageModule" },
+  { path: "register", loadChildren: "./pages/home/home.module#HomePageModule" },
+  { path: "login", loadChildren: "./pages/login/login.module#LoginPageModule" },
+  { path: "tabs", loadChildren: "./tabs/tabs.module#TabsPageModule" }
 ];
 @NgModule({
   imports: [

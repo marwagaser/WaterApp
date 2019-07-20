@@ -18,7 +18,7 @@ export class LoginPage implements OnInit {
 
   register() {
     console.log("go to register");
-    this._router.navigate(["/home"]);
+    this._router.navigate(["/register"]);
   }
   login() {
     if (!this.loginForm.valid) {
@@ -28,5 +28,6 @@ export class LoginPage implements OnInit {
       this.missingUserPass = "";
       console.log("your logged");
     }
+    this._router.navigate(["tabs"]);
   }
 }
