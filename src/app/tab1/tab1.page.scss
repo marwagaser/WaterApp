@@ -1,0 +1,30 @@
+.welcome-card ion-img {
+  max-height: 35vh;
+  overflow: hidden;
+}
+.ion-color-yellow {
+  --ion-color-base: #f08080;
+  --ion-color-base-rgb: 240,128,128;
+  --ion-color-contrast: #000000;
+  --ion-color-contrast-rgb: 0,0,0;
+  --ion-color-shade:#f08080;
+  --ion-color-tint: #f08080;
+}
+
+.ion-color-bluee {
+  --ion-color-base: #f0f082;
+  --ion-color-base-rgb: 240,240,130;
+  --ion-color-contrast: #000000;
+  --ion-color-contrast-rgb: 0,0,0;
+  --ion-color-shade:#f0f082;
+  --ion-color-tint: #f0f082;
+}
+
+.ion-color-grey {
+  --ion-color-base: #9a9a9a;
+  --ion-color-base-rgb: 60,60,60;
+  --ion-color-contrast: #000000;
+  --ion-color-contrast-rgb: 0,0,0;
+  --ion-color-shade:#9a9a9a;
+  --ion-color-tint: #9a9a9a;
+}
