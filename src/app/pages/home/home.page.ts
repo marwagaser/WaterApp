@@ -2,13 +2,14 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Validators, FormBuilder } from "@angular/forms";
 import { PasswordValidation } from "../passwordValidation";
+import { AlertController } from "@ionic/angular";
 @Component({
   selector: "app-home",
   templateUrl: "./home.page.html",
   styleUrls: ["./home.page.scss"]
 })
 export class HomePage implements OnInit {
-  formNotValid = "";
+  // formNotValid = "";
   signupForm = this.formB.group(
     {
       username: [
@@ -37,19 +38,33 @@ export class HomePage implements OnInit {
     },
     { validator: PasswordValidation.MatchPassword }
   );
-  constructor(private _router: Router, private formB: FormBuilder) {}
+  constructor(
+    private _router: Router,
+    private formB: FormBuilder,
+    public alertController: AlertController
+  ) {}
 
   ngOnInit() {}
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: "Incorrect registration data",
+      message: "Please correct invalid fields",
+      buttons: ["OK"]
+    });
+
+    await alert.present();
+  }
   login() {
     console.log("go to login");
     this._router.navigate(["/login"]);
   }
   register() {
     if (!this.signupForm.valid) {
-      this.formNotValid = "There are some incorrect fields.";
-      console.log(this.signupForm.valid);
+      this.presentAlert();
+      //this.formNotValid = "There are some incorrect fields.";
     } else {
-      this.formNotValid = "";
+      //this.formNotValid = "";
+
       console.log(this.signupForm.value);
       this.signupForm = this.formB.group(
         {
@@ -79,6 +94,7 @@ export class HomePage implements OnInit {
         },
         { validator: PasswordValidation.MatchPassword }
       );
+      this._router.navigate(["/login"]);
     }
   }
 }
