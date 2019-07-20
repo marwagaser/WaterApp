@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-title>
+      Points
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <br />
+  <br />
+  <br />
+  <br />
+  <div class="container">
+    <div class="progress-wrapper">
+      <div class="current" [ngStyle]="getOverlayStyle()">
+        Points Left: {{ current }}
+      </div>
+
+      <round-progress
+        [current]="current"
+        [max]="max"
+        [stroke]="stroke"
+        [radius]="radius"
+        [semicircle]="semicircle"
+        [rounded]="rounded"
+        [responsive]="responsive"
+        [clockwise]="clockwise"
+        [color]="gradient ? 'url(#gradient)' : color"
+        [background]="background"
+        [duration]="duration"
+        [animation]="animation"
+        [animationDelay]="animationDelay"
+      ></round-progress>
+    </div>
+  </div>
+
+  <br />
+  <ion-button color="medium" size="default" expand="block"
+    >Update Info
+  </ion-button>
+  <form>
+    <!-- validation and form TBD -->
+  </form>
+  <br />
+  <ion-button color="danger" size="default" expand="block" (click)="toLogin()"
+    >Logout
+  </ion-button>
+</ion-content>

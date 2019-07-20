@@ -1,0 +1,158 @@
+.welcome-card ion-img {
+  max-height: 35vh;
+  overflow: hidden;
+}
+.ion-color-yellow {
+  --ion-color-base: #f08080;
+  --ion-color-base-rgb: 240, 128, 128;
+  --ion-color-contrast: #000000;
+  --ion-color-contrast-rgb: 0, 0, 0;
+  --ion-color-shade: #f08080;
+  --ion-color-tint: #f08080;
+}
+
+.ion-color-bluee {
+  --ion-color-base: #f0f082;
+  --ion-color-base-rgb: 240, 240, 130;
+  --ion-color-contrast: #000000;
+  --ion-color-contrast-rgb: 0, 0, 0;
+  --ion-color-shade: #f0f082;
+  --ion-color-tint: #f0f082;
+}
+
+.ion-color-grey {
+  --ion-color-base: #9a9a9a;
+  --ion-color-base-rgb: 60, 60, 60;
+  --ion-color-contrast: #000000;
+  --ion-color-contrast-rgb: 0, 0, 0;
+  --ion-color-shade: #9a9a9a;
+  --ion-color-tint: #9a9a9a;
+}
+* {
+  box-sizing: border-box;
+}
+#divElement {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -50px;
+  width: 100px;
+  height: 100px;
+}
+​ body {
+  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: #fafafa;
+}
+
+h2 {
+  margin: 0 0 40px;
+}
+
+.cf:before,
+.cf:after {
+  content: " ";
+  display: table;
+}
+
+.cf:after {
+  clear: both;
+}
+.btns {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.btns2 {
+  position: absolute;
+  top: 50px;
+  right: 10px;
+}
+.progress-wrapper {
+  position: relative;
+  margin: 20px auto;
+  font-size: 40px;
+}
+
+.current {
+  position: absolute;
+  color: #bbb;
+  font-weight: 100;
+  line-height: 1;
+}
+
+round-progress {
+  margin: auto;
+}
+
+.container {
+  width: 100%;
+  max-width: 650px;
+  margin: 40px auto 80px;
+  text-align: center;
+  padding: 40px;
+  background: #fff;
+  //border: solid 1px #ccc;
+  //border-radius: 4px;
+}
+
+input,
+select {
+  float: right;
+  padding: 5px;
+  width: 150px;
+}
+
+input[type="checkbox"] {
+  width: auto;
+}
+
+input[type="color"] {
+  height: 30px;
+}
+
+.back {
+  position: fixed;
+  top: 5px;
+  right: 5px;
+}
+
+.loading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  font-size: 3em;
+  color: #bbb;
+}
+
+@media (max-width: 650px) {
+  body {
+    padding: 12.5px;
+  }
+
+  .back {
+    position: static;
+    display: block;
+    text-align: center;
+  }
+
+  h2,
+  .back {
+    margin-bottom: 20px;
+  }
+
+  input,
+  select {
+    width: 100%;
+    margin-top: 5px;
+    float: none;
+  }
+
+  .container {
+    margin: 0 auto 50px;
+    padding: 25px;
+  }
+}

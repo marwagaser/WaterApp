@@ -42,7 +42,11 @@ export class LoginPage implements OnInit {
     } else {
       // this.missingUserPass = "";
       console.log("your logged");
+      this.loginForm = this.formB.group({
+        username: ["", [Validators.required]],
+        password: ["", [Validators.required]]
+      });
+      this._router.navigate(["tabs"]);
     }
-    this._router.navigate(["tabs"]);
   }
 }
