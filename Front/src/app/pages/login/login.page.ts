@@ -8,11 +8,18 @@ import { AlertController } from "@ionic/angular";
   styleUrls: ["./login.page.scss"]
 })
 export class LoginPage implements OnInit {
+  username = "";
+  name = "";
+  region = "";
+  building;
+  password = "";
+  confirmpassword = "";
   //missingUserPass = "";
   loginForm = this.formB.group({
     username: ["", [Validators.required]],
     password: ["", [Validators.required]]
   });
+
   constructor(
     private _router: Router,
     private formB: FormBuilder,
