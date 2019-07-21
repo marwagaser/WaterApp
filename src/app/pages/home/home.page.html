@@ -10,7 +10,7 @@
   <form [formGroup]="signupForm">
     <ion-item>
       <ion-label position="floating">Username</ion-label>
-      <ion-input type="text" formControlName="username"></ion-input>
+      <ion-input type="text" formControlName="username" [(ngModel)]="username"></ion-input>
     </ion-item>
     <ion-text
       color="danger"
@@ -55,7 +55,7 @@
         type="text"
         inputmode="text"
         formControlName="name"
-      ></ion-input>
+       [(ngModel)]="name"></ion-input>
     </ion-item>
     <ion-text
       color="danger"
@@ -93,14 +93,14 @@
     <!-- end of name -->
     <ion-item>
       <ion-label position="floating">Region</ion-label>
-      <ion-input type="text" formControlName="region"></ion-input>
+      <ion-input type="text" formControlName="region" [(ngModel)]="region"></ion-input>
     </ion-item>
     <ion-text
       color="danger"
       *ngIf="
         signupForm.get('region').errors?.required &&
         signupForm.get('region').touched
-      "
+      "  
     >
       Please insert your region details
     </ion-text>
@@ -133,7 +133,7 @@
     <!-- end of region -->
     <ion-item>
       <ion-label position="floating">Building Number</ion-label>
-      <ion-input type="number" formControlName="buildingNumber"></ion-input>
+      <ion-input type="number" formControlName="buildingNumber"[(ngModel)]="building"></ion-input>
     </ion-item>
     <ion-text
       color="danger"
@@ -141,7 +141,7 @@
         signupForm.get('buildingNumber').errors?.required &&
         signupForm.get('buildingNumber').touched
       "
-    >
+      >
       Your required to specify your building number.
     </ion-text>
     <ion-text
@@ -162,7 +162,7 @@
 
     <ion-item>
       <ion-label position="floating">Password</ion-label>
-      <ion-input type="password" formControlName="password"></ion-input>
+      <ion-input type="password" formControlName="password"  [(ngModel)]="passport"></ion-input>
     </ion-item>
     <ion-text
       color="danger"
@@ -189,7 +189,7 @@
     <!-- end of password -->
     <ion-item>
       <ion-label position="floating">Confirm Password</ion-label>
-      <ion-input type="password" formControlName="confirmpassword"></ion-input>
+      <ion-input type="password" formControlName="confirmpassword"  [(ngModel)]="confirmpassword"></ion-input>
     </ion-item>
     <ion-text
       color="danger"
@@ -197,7 +197,7 @@
         signupForm.get('confirmpassword').touched &&
         signupForm.get('confirmpassword').errors?.required
       "
-    >
+      >
       Please re-enter your password.
     </ion-text>
     <ion-text
@@ -219,5 +219,6 @@
     <ion-button expand="block" color="primary" (click)="login()"
       >Login</ion-button
     >
+ {{signupForm.value|json}}
   </form>
 </ion-content>

@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { Validators, FormBuilder } from "@angular/forms";
 import { PasswordValidation } from "../passwordValidation";
 import { AlertController } from "@ionic/angular";
+import { AuthService } from 'src/app/auth.service';
 @Component({
   selector: "app-home",
   templateUrl: "./home.page.html",
@@ -10,6 +11,12 @@ import { AlertController } from "@ionic/angular";
 })
 export class HomePage implements OnInit {
   // formNotValid = "";
+  username="";
+  name = "";
+  region = "";
+  building;
+  password="";
+  confirmpassword="";
   signupForm = this.formB.group(
     {
       username: [
@@ -49,10 +56,12 @@ export class HomePage implements OnInit {
   constructor(
     private _router: Router,
     private formB: FormBuilder,
-    public alertController: AlertController
+    public alertController: AlertController,
+    public _authService:AuthService
   ) {}
 
   ngOnInit() {}
+
   async presentAlert() {
     const alert = await this.alertController.create({
       header: "Incorrect registration data",
@@ -63,6 +72,7 @@ export class HomePage implements OnInit {
     await alert.present();
   }
   login() {
+   
     console.log("go to login");
     this._router.navigate(["/login"]);
   }
@@ -72,7 +82,16 @@ export class HomePage implements OnInit {
       //this.formNotValid = "There are some incorrect fields.";
     } else {
       //this.formNotValid = "";
-
+      
+    //  var userobj={
+    //   //   username = this.signupForm.get("username").value;
+    //   // this.name = this.signupForm.get("name").value;
+    //   // this.region = this.signupForm.get("region").value;
+    //   // this.building = this.signupForm.get("building").value;
+    //   // this.password = this.signupForm.get("passport").value;
+    //   // this.confirmpassword = this.signupForm.get("confirmpassword").value;
+    //   }
+     // this._authService.addReg(userobj);
       console.log(this.signupForm.value);
       this.signupForm = this.formB.group(
         {
