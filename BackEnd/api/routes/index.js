@@ -69,7 +69,7 @@ router.post("/auth/login", isNotAuthenticated, authCtrl.login);
 
 
 
-router.get("/user/getUsers", isAuthenticated, userCtrl.getUsers);
+router.get("/user/getUsers",isAuthenticated, userCtrl.getUsers);
 
   /*productCtrl = require('../controllers/ProductController');
   
