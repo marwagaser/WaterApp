@@ -61,7 +61,7 @@ module.exports.register = function(req, res, next) {
 		});
 	}
 	
-
+	
 		User.findOne({
 			username: req.body.username.trim().toLowerCase()
 		}).exec(function(err, user) {
@@ -80,32 +80,16 @@ module.exports.register = function(req, res, next) {
 			}
 			delete req.body.createdAt;
 			delete req.body.updatedAt;
-
+	
 			// Encrypt the password before saving the user in the database
 
-			Encryption.hashPassword(password, function(err, hash) {
-				const transporter = nodemailer.createTransport({
-					port: 25,
-					service: "gmail",
-					secure: false,
-					auth: {
-						//type: 'OAuth2',
-						user: "officehours111@gmail.com",
-						pass: "officehours_111"
-					},
-					tls: {
-						rejectUnauthorized: false
-					}
-				});
 			
-
-				if (hash) {
-					req.body.password = hash;
 					User.create(req.body, function(err, newUser) {
 						if (err) {
+						
 						}
 
-                    });
+                    
 						return res.status(201).json({
 							err: null,
 							msg:
@@ -113,9 +97,8 @@ module.exports.register = function(req, res, next) {
 							data: req.body
 						});
 
-						
-				}
-			});
+					});	
+			
 	
 	});
 };

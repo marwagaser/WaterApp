@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Http, Headers } from "@angular/http";
 import { environment } from "../environments/environment";
-import { map } from "rxjs/Operators";
+import { map } from "rxjs/operators";
+import "rxjs/add/operator/map";
 
 @Injectable({
   providedIn: "root"
@@ -29,7 +30,7 @@ export class AuthService {
   }
 
   getProfile() {
-    return this.http.get(environment.apiUrl + "user/profile");
+    return this.http.get(environment.apiUrl + 'user/profile');
   }
   logout() {
     this.authorized = false;
@@ -39,21 +40,22 @@ export class AuthService {
 
   public LogIn(UserOb) {
     var headers = new Headers();
-    headers.append("content-type", "application/json");
+    headers.append('content-type', 'application/json');
 
     return this.http
-      .post(environment.apiUrl + "auth/login", UserOb)
-      .pipe(map((res: any) => res.json()));
+      .post(environment.apiUrl + 'auth/login', UserOb)
+      .map(res => res.json());
   }
 
   public addReg(UserOb) {
+    console.log("callingaddReg");
     var headers = new Headers();
     headers.append("content-type", "application/json");
-
-    return this.http.post(environment.apiUrl + "auth/register", UserOb).pipe(
+    console.log("headers appended");
+    return this.http.post(environment.apiUrl + '/auth/register', UserOb).
       map(res => {
         return res;
-      })
-    );
+      });
+
   }
 }

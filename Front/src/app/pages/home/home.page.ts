@@ -90,8 +90,9 @@ export class HomePage implements OnInit {
         password: this.password,
         confirmPassword: this.confirmpassword
       };
+      console.log(userobj);
       this._authService.addReg(userobj);
-      console.log(this.signupForm.value);
+      
       this.signupForm = this.formB.group(
         {
           username: [

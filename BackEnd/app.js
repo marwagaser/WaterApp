@@ -1,12 +1,16 @@
 require('./api/config/DBConnection');
-const express = require('express'),
+
+var express = require('express'),
   logger = require('morgan'),
+  MongoClient = require("mongodb").MongoClient,
   cors = require('cors'),
   helmet = require('helmet'),
   compression = require('compression'),
   bodyParser = require('body-parser'),
   routes = require('./api/routes'),
+  router = express.Router(),
   config = require('./api/config/Config'),
+ // port=3000,
   app = express();
 
 app.set('secret', config.SECRET);
@@ -50,3 +54,5 @@ app.use((req, res) => {
 });
 
 module.exports = app;
+//app.listen(port);
+//console.log('There will be dragons: http://localhost:' + port);
