@@ -12,6 +12,7 @@ import { AuthService } from "src/app/auth.service";
 export class HomePage implements OnInit {
   // formNotValid = "";
   username = "";
+  userExists = false;
   name = "";
   region = "";
   building;
@@ -71,6 +72,16 @@ export class HomePage implements OnInit {
 
     await alert.present();
   }
+
+  async takenUser() {
+    const alert = await this.alertController.create({
+      header: "Username is taken",
+      message: "Please choose another avaliable username",
+      buttons: ["OK"]
+    });
+
+    await alert.present();
+  }
   login() {
     console.log("go to login");
     this._router.navigate(["/login"]);
@@ -90,47 +101,18 @@ export class HomePage implements OnInit {
         password: this.password,
         confirmPassword: this.confirmpassword
       };
-      console.log(userobj);
-      this._authService.addReg(userobj);
-      
-      this.signupForm = this.formB.group(
-        {
-          username: [
-            "",
-            [
-              Validators.required,
-              Validators.minLength(5),
-              Validators.pattern("^[a-zA-Z0-9_]*$")
-            ]
-          ],
-          name: [
-            "",
-            [
-              Validators.required,
-              Validators.pattern("^[a-zA-Z]*$"),
-              Validators.minLength(3)
-            ]
-          ],
-
-          region: [
-            "",
-            [
-              Validators.required,
-              Validators.minLength(3),
-              Validators.pattern("^[a-zA-Z0-9 ]*$")
-            ]
-          ],
-
-          buildingNumber: [
-            "",
-            [Validators.required, Validators.min(1), Validators.max(999)]
-          ],
-          password: ["", [Validators.required, Validators.minLength(8)]],
-          confirmpassword: ["", [Validators.required]]
+      this._authService.addReg(userobj).subscribe(
+        data => {
+          console.log(data["_body"]);
+          this._router.navigate(["/login"]);
         },
-        { validator: PasswordValidation.MatchPassword }
+        error => {
+          this.userExists = true;
+          this.takenUser();
+          console.log(error);
+          console.log(this.userExists);
+        }
       );
-      this._router.navigate(["/login"]);
     }
   }
 }
