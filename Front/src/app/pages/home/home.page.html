@@ -190,7 +190,16 @@
     >
       Password is required.
     </ion-text>
-
+    <ion-text
+      color="danger"
+      *ngIf="
+        signupForm.get('password').errors?.pattern &&
+        signupForm.get('password').touched &&
+        !signupForm.get('password').errors?.required
+      "
+    >
+      Your password cannot contain spaces.
+    </ion-text>
     <ion-text
       color="danger"
       *ngIf="

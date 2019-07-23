@@ -1,6 +1,8 @@
 import { Component, ViewEncapsulation } from "@angular/core";
 import { RoundProgressEase } from "angular-svg-round-progressbar";
 import { Router } from "@angular/router";
+import { Validators, FormBuilder } from "@angular/forms";
+import { PasswordValidation } from "../pages/passwordValidation";
 @Component({
   selector: "app-tab4",
   templateUrl: "tab4.page.html",
@@ -9,6 +11,11 @@ import { Router } from "@angular/router";
 })
 export class Tab4Page {
   updateHidden = false;
+  name = null;
+  region = null;
+  building = null;
+  password = null;
+  confirmpassword = null;
   current: number = 27;
   max: number = 100;
   stroke: number = 15;
@@ -25,7 +32,28 @@ export class Tab4Page {
   animations: string[] = [];
   gradient: boolean = false;
   realCurrent: number = 0;
-  constructor(ease: RoundProgressEase, private _router: Router) {
+  updateForm = this.formB.group(
+    {
+      name: ["", [Validators.pattern("^[a-zA-Z]*$"), Validators.minLength(3)]],
+      region: [
+        "",
+        [Validators.minLength(3), Validators.pattern("^[a-zA-Z0-9 ]*$")]
+      ],
+
+      buildingNumber: ["", [Validators.min(1), Validators.max(999)]],
+      password: [
+        "",
+        [Validators.minLength(8), Validators.pattern("^[^\\s]+$")]
+      ],
+      confirmpassword: ["", []]
+    },
+    { validator: PasswordValidation.MatchPassword }
+  );
+  constructor(
+    ease: RoundProgressEase,
+    private _router: Router,
+    private formB: FormBuilder
+  ) {
     // Kinda hacky way to get all of the easing functions at run-time, because it can
     // technically fetch something from up the prototype chain.
     for (let prop in ease) {
@@ -48,11 +76,35 @@ export class Tab4Page {
       "font-size": this.radius / 3.5 + "px"
     };
   }
-  toLogin() {
-    // do back end validation
+  logoutUser() {
+    // do back end validation and call logout method
     this._router.navigate(["/login"]);
   }
   toggle() {
     this.updateHidden = !this.updateHidden;
+  }
+  updateInfo() {
+    if (!this.updateForm.valid) {
+      console.log("not valid");
+    } else {
+      if (this.region != null)
+        if (this.region.trim() === "") {
+          this.region = null;
+        }
+      var updatedUser = {
+        name: this.name,
+        region: this.region,
+        building: this.building,
+        password: this.password,
+        confirmPassword: this.confirmpassword
+      };
+      //send user here!
+      console.log(updatedUser);
+      this.name = null;
+      this.region = null;
+      this.building = null;
+      this.password = null;
+      this.confirmpassword = null;
+    }
   }
 }

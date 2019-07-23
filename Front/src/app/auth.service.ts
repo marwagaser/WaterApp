@@ -12,7 +12,6 @@ import { Platform, AlertController } from "@ionic/angular";
   providedIn: "root"
 })
 export class AuthService {
-  userNotfound = "";
   private token: string;
   public authorized: boolean;
   constructor(

@@ -36,14 +36,160 @@
   </div>
 
   <br />
-  <ion-button color="medium" size="default" expand="block"
+  <ion-button color="medium" size="default" expand="block" (click)="toggle()"
     >Update Info
   </ion-button>
-  <form>
-    <!-- validation and form TBD -->
+
+  <form [formGroup]="updateForm" *ngIf="updateHidden">
+    <ion-item>
+      <ion-label position="floating">Name</ion-label>
+      <ion-input
+        type="text"
+        inputmode="text"
+        formControlName="name"
+        [(ngModel)]="name"
+      ></ion-input>
+    </ion-item>
+
+    <ion-text
+      color="danger"
+      *ngIf="
+        updateForm.get('name').errors?.pattern && updateForm.get('name').touched
+      "
+    >
+      Your name should contain alphabets only.
+    </ion-text>
+    <ion-text
+      color="danger"
+      *ngIf="
+        updateForm.get('name').errors?.minlength &&
+        updateForm.get('name').touched &&
+        !updateForm.get('name').errors?.pattern
+      "
+    >
+      Your name is too short.
+    </ion-text>
+
+    <br />
+
+    <!-- end of name -->
+    <ion-item>
+      <ion-label position="floating">Region</ion-label>
+      <ion-input
+        type="text"
+        formControlName="region"
+        [(ngModel)]="region"
+      ></ion-input>
+    </ion-item>
+
+    <ion-text
+      color="danger"
+      *ngIf="
+        updateForm.get('region').errors?.pattern &&
+        updateForm.get('region').touched
+      "
+    >
+      Your region should be alphanumeric.
+    </ion-text>
+
+    <ion-text
+      color="danger"
+      *ngIf="
+        updateForm.get('region').errors?.minlength &&
+        updateForm.get('region').touched &&
+        !updateForm.get('region').errors?.pattern
+      "
+    >
+      Your region is too short.
+    </ion-text>
+
+    <br />
+
+    <!-- end of region -->
+    <ion-item>
+      <ion-label position="floating">Building Number</ion-label>
+      <ion-input
+        type="number"
+        formControlName="buildingNumber"
+        [(ngModel)]="building"
+      ></ion-input>
+    </ion-item>
+
+    <ion-text
+      color="danger"
+      *ngIf="
+        (updateForm.get('buildingNumber').errors?.max &&
+          updateForm.get('buildingNumber').touched) ||
+        (updateForm.get('buildingNumber').errors?.min &&
+          updateForm.get('buildingNumber').touched)
+      "
+    >
+      Your building number should be between 1 and 999.
+    </ion-text>
+
+    <br />
+
+    <!-- end of building number -->
+
+    <ion-item>
+      <ion-label position="floating">Password</ion-label>
+      <ion-input
+        type="password"
+        formControlName="password"
+        [(ngModel)]="password"
+      ></ion-input>
+    </ion-item>
+    <ion-text
+      color="danger"
+      *ngIf="
+        updateForm.get('password').errors?.pattern &&
+        updateForm.get('password').touched
+      "
+    >
+      Your password cannot contain spaces.
+    </ion-text>
+    <ion-text
+      color="danger"
+      *ngIf="
+        updateForm.get('password').errors?.minlength &&
+        updateForm.get('password').touched &&
+        !updateForm.get('password').errors?.pattern
+      "
+    >
+      Your password is too short.
+    </ion-text>
+    <br />
+
+    <!-- end of password -->
+    <ion-item>
+      <ion-label position="floating">Confirm Password</ion-label>
+      <ion-input
+        type="password"
+        formControlName="confirmpassword"
+        [(ngModel)]="confirmpassword"
+      ></ion-input>
+    </ion-item>
+
+    <ion-text
+      color="danger"
+      *ngIf="
+        updateForm.get('confirmpassword').errors?.MatchPassword &&
+        updateForm.get('confirmpassword').touched
+      "
+    >
+      Password and confirm password do not match.</ion-text
+    >
+    <br />
+    <br />
+    <br />
+    <ion-button color="success" (click)="updateInfo()">Update</ion-button>
   </form>
   <br />
-  <ion-button color="danger" size="default" expand="block" (click)="toLogin()"
+  <ion-button
+    color="danger"
+    size="default"
+    expand="block"
+    (click)="logoutUser()"
     >Logout
   </ion-button>
 </ion-content>
