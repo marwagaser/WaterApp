@@ -60,7 +60,7 @@ var isNotAuthenticated = function(req, res, next) {
 
 ///////////////////////////////////////////////////////////////////////
 
-router.post("/auth/register", isNotAuthenticated, authCtrl.register);
+router.post("/auth/register",isNotAuthenticated, authCtrl.register);
 router.post("/auth/login", isNotAuthenticated, authCtrl.login);
 
 
