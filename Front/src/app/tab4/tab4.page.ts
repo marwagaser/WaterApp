@@ -3,6 +3,7 @@ import { RoundProgressEase } from "angular-svg-round-progressbar";
 import { Router } from "@angular/router";
 import { Validators, FormBuilder } from "@angular/forms";
 import { PasswordValidation } from "../pages/passwordValidation";
+import { AuthService } from "../auth.service";
 @Component({
   selector: "app-tab4",
   templateUrl: "tab4.page.html",
@@ -11,6 +12,8 @@ import { PasswordValidation } from "../pages/passwordValidation";
 })
 export class Tab4Page {
   updateHidden = false;
+  //clientName = //the name of the user should be passed to me;
+  // current: number = //the one which i should get from the service;
   name = null;
   region = null;
   building = null;
@@ -52,10 +55,9 @@ export class Tab4Page {
   constructor(
     ease: RoundProgressEase,
     private _router: Router,
-    private formB: FormBuilder
+    private formB: FormBuilder,
+    private _authService: AuthService
   ) {
-    // Kinda hacky way to get all of the easing functions at run-time, because it can
-    // technically fetch something from up the prototype chain.
     for (let prop in ease) {
       if (prop.toLowerCase().indexOf("ease") > -1) {
         this.animations.push(prop);
@@ -78,6 +80,8 @@ export class Tab4Page {
   }
   logoutUser() {
     // do back end validation and call logout method
+    // this._authService.signOut();
+    //
     this._router.navigate(["/login"]);
   }
   toggle() {
@@ -98,8 +102,9 @@ export class Tab4Page {
         password: this.password,
         confirmPassword: this.confirmpassword
       };
-      //send user here!
+      //send updated data here!
       console.log(updatedUser);
+      //////////////
       this.name = null;
       this.region = null;
       this.building = null;

@@ -54,11 +54,21 @@ export class AuthService {
     this.token = null;
     delete window.localStorage.token;
   }
-
+  signOut() {
+    // return this.http.get(environment.apiUrl + "/logout");
+  }
+  getPoints() {
+    //return this.http.get(environment.apiUrl + "/points");
+  }
   public LogIn(UserOb) {
     return this.http.post(environment.apiUrl + "/auth/login", UserOb);
   }
-
+  updateInfo(UserOb) {
+    // var headers = new Headers();
+    // headers.append("content-type", "application/json");
+    // console.log("userob", UserOb);
+    // return this.http.post(environment.apiUrl + "/updateinfo", UserOb);
+  }
   public addReg(UserOb) {
     var headers = new Headers();
     headers.append("content-type", "application/json");
