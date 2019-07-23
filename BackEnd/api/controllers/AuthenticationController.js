@@ -140,9 +140,28 @@ module.exports.login = function(req, res, next) {
 				.status(401)
 				.json({ err: null, msg: "User not found.", data: null });
 		}
+		if(req.body.password != user.password){
+			return res
+					.status(401)
+					.json({ err: null, msg: "Password is incorrect.", data: null });
+		}
+		else{
+			var token = jwt.sign(
+				{
+					// user.toObject transorms the document to a json object without the password as we can't leak sensitive info to the frontend
+					user: user.toObject()
+				},
+				req.app.get("secret"),
+				{
+					expiresIn: "12h"
+				}
+			);
+			// Send the JWT to the frontend
+			res.status(200).json({ err: null, msg: "Welcome", data: token });
+		}
 
 		// If user found then check that the password he entered matches the encrypted hash in the database
-		Encryption.comparePasswordToHash(req.body.password, user.password, function(
+	/*	Encryption.comparePasswordToHash(req.body.password, user.password, function(
 			err,
 			passwordMatches
 		) {
@@ -167,7 +186,7 @@ module.exports.login = function(req, res, next) {
 				}
 			);
 			// Send the JWT to the frontend
-			res.status(200).json({ err: null, msg: "Welcome", data: token });
-		});
+			res.status(200).json({ err: null, msg: "Welcome", data: token });*/
+	//	});
 	});
 };

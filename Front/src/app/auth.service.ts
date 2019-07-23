@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Http, Headers } from "@angular/http";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { environment } from "../environments/environment";
 //import { map } from "rxjs/operators";
 import "rxjs/add/operator/map";
 //import { Storage } from '@ionic/storage';
 //import { tap, catchError } from 'rxjs/operators';
-import { Platform, AlertController } from '@ionic/angular';
+import { Platform, AlertController } from "@ionic/angular";
 
 @Injectable({
   providedIn: "root"
@@ -14,22 +14,26 @@ import { Platform, AlertController } from '@ionic/angular';
 export class AuthService {
   private token: string;
   public authorized: boolean;
-  constructor(private http: Http,private httpClient: HttpClient, private alertController: AlertController) {
+  constructor(
+    private http: Http,
+    private httpClient: HttpClient,
+    private alertController: AlertController
+  ) {
     this.token = window.localStorage.token;
     if (this.token) {
       this.authorized = true;
     } else {
       this.authorized = false;
-   }
+    }
   }
-  
+
   showAlert(msg) {
     const alert = this.alertController.create({
       message: msg,
-      header: 'Error',
-      buttons: ['OK']
+      header: "Error",
+      buttons: ["OK"]
     });
-   // tslint:disable-next-line:no-shadowed-variable
+    // tslint:disable-next-line:no-shadowed-variable
     alert.then(alert => alert.present());
   }
   getAuthorizationToken() {
@@ -43,24 +47,32 @@ export class AuthService {
   }
 
   getProfile() {
-    return this.http.get(environment.apiUrl + 'user/profile');
+    return this.http.get(environment.apiUrl + "user/profile");
   }
   logout() {
     this.authorized = false;
     this.token = null;
     delete window.localStorage.token;
   }
-
-  public LogIn(UserOb) {
-    return this.http
-      .post(environment.apiUrl + '/auth/login', UserOb)
-      .subscribe(data => {console.log(data['_body']);}, error => {console.log(error)});
+  signOut() {
+    // return this.http.get(environment.apiUrl + "/logout");
   }
-
+  getPoints() {
+    //return this.http.get(environment.apiUrl + "/points");
+  }
+  public LogIn(UserOb) {
+    return this.http.post(environment.apiUrl + "/auth/login", UserOb);
+  }
+  updateInfo(UserOb) {
+    // var headers = new Headers();
+    // headers.append("content-type", "application/json");
+    // console.log("userob", UserOb);
+    // return this.http.post(environment.apiUrl + "/updateinfo", UserOb);
+  }
   public addReg(UserOb) {
     var headers = new Headers();
     headers.append("content-type", "application/json");
-    console.log("userob",UserOb);
-    return this.http.post(environment.apiUrl+'/auth/register', UserOb).subscribe(data => {console.log(data['_body']);}, error => {console.log(error)});
+    console.log("userob", UserOb);
+    return this.http.post(environment.apiUrl + "/auth/register", UserOb);
   }
 }
