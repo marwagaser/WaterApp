@@ -64,7 +64,7 @@ router.post("/auth/register", isNotAuthenticated, authCtrl.register);
 router.post("/auth/login", isNotAuthenticated, authCtrl.login);
 
 router.get("/user/getUsers", isAuthenticated, userCtrl.getUsers);
-
+router.post("/user/display_chart",isAuthenticated, userCtrl.getWaterUsage)
 /*productCtrl = require('../controllers/ProductController');
   
 //-------------------------------Product Routes-----------------------------------
