@@ -53,12 +53,13 @@ export class AuthService {
 
   public LogIn(UserOb) {
     return this.http
-      .post(environment.apiUrl + 'auth/login', UserOb)
+      .post(environment.apiUrl + '/auth/login', UserOb)
       .subscribe(data => {console.log(data['_body']);}, error => {console.log(error)});
   }
 
   public addReg(UserOb) {
-   
+    var headers = new Headers();
+    headers.append("content-type", "application/json");
     console.log("userob",UserOb);
     return this.http.post(environment.apiUrl+'/auth/register', UserOb).subscribe(data => {console.log(data['_body']);}, error => {console.log(error)});
   }

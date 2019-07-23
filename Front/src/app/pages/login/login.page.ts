@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Validators, FormBuilder } from "@angular/forms";
 import { AlertController } from "@ionic/angular";
+import { AuthService } from "src/app/auth.service";
 @Component({
   selector: "app-login",
   templateUrl: "./login.page.html",
@@ -23,7 +24,9 @@ export class LoginPage implements OnInit {
   constructor(
     private _router: Router,
     private formB: FormBuilder,
-    public alertController: AlertController
+    public alertController: AlertController,
+    public _authService: AuthService
+
   ) {}
 
   ngOnInit() {}
@@ -42,13 +45,18 @@ export class LoginPage implements OnInit {
     this._router.navigate(["/register"]);
   }
   login() {
+    var userobj = {
+      username: this.username,
+      name: this.name}
+
     if (!this.loginForm.valid) {
       this.presentAlert();
       // this.missingUserPass = "Please insert your missing username or password";
       return;
     } else {
       // this.missingUserPass = "";
-      console.log("your logged");
+      this._authService.LogIn(userobj);
+      //console.log("your logged");
       this.loginForm = this.formB.group({
         username: ["", [Validators.required]],
         password: ["", [Validators.required]]
