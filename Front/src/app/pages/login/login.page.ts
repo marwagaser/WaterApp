@@ -47,7 +47,7 @@ export class LoginPage implements OnInit {
   login() {
     var userobj = {
       username: this.username,
-      name: this.name}
+      password: this.password}
 
     if (!this.loginForm.valid) {
       this.presentAlert();
@@ -55,12 +55,14 @@ export class LoginPage implements OnInit {
       return;
     } else {
       // this.missingUserPass = "";
-      this._authService.LogIn(userobj);
+     
       //console.log("your logged");
       this.loginForm = this.formB.group({
         username: ["", [Validators.required]],
         password: ["", [Validators.required]]
       });
+      console.log(userobj);
+      this._authService.LogIn(userobj);
       this._router.navigate(["tabs"]);
     }
   }
