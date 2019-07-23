@@ -60,6 +60,10 @@ export class LoginPage implements OnInit {
       this._authService.LogIn(userobj).subscribe(
         data => {
           console.log(data["_body"]);
+          this.loginForm = this.formB.group({
+            username: ["", [Validators.required]],
+            password: ["", [Validators.required]]
+          });
           this._router.navigate(["/tabs"]);
         },
         error => {
