@@ -6,6 +6,8 @@ var mongoose = require("mongoose"),
 	cloudinaryStorage = require('multer-storage-cloudinary'),
 	path = require('path'),
 	User = mongoose.model("User");
+	WaterMeter = mongoose.model("WaterMeter");
+	Region = mongoose.model("Region");
 var bodyParser = require("body-parser");
 const express = require("express");
 var app = express();
@@ -14,6 +16,7 @@ cloudinary.config({  //Your Cloudinary API Data
 	api_key: '885116352125168',
 	api_secret: 'dwvBE716ok5Aoh0m2PSWDXIkLCM'
 });
+const axios = require('axios');
 
 
 	(Encryption = require("../utils/Encryption"));
@@ -236,3 +239,56 @@ module.exports.updateUserPassword = function(req, res, next) {
 	});
 };
 
+module.exports.getWaterUsage = function(req,res,next){
+	var user_name = req.decodedToken.user.username;
+	User.findOne({username : user_name})
+	  .exec(function(err, userInfo){
+			if(err){
+				return next(err)
+			}
+			if(!userInfo){
+				return res
+					.status(404)
+					.json({err:null, msg: "User Not Found", data:null});
+			}
+			var building = userInfo.building
+			Region.findOne({regionName : userInfo.region , 'buildings.buildingID' : building  })
+				.exec(function(err1, buildingInfo){
+
+					if(err1){
+						return next(err1);
+					}
+					if(!buildingInfo){
+						return res
+							.status(404)
+							.json({err:null, msg:"Region Info Not Found", data:null});
+					}
+
+					 var waterMeterID = buildingInfo.waterMeterID
+					 WaterMeter.find({wmid : waterMeterID}).
+					 	exec(function(err2, waterMeterInfo){
+							if(err2){
+								return next(err2);
+							}
+							if(!waterMeterInfo){
+								return res
+									.status(404)
+									.json({err:null, msg:"WaterMeter Info Not Found", data:null});
+							}
+
+							axios.post('https//localhost:8000/display_chart', {
+								data : waterMeterInfo
+						})
+							.then((res) => {
+							console.log(`statusCode: ${res.statusCode}`)
+							console.log(res)
+							})
+								.catch((error) => {
+								console.error(error)
+								})
+
+
+						 });
+				});
+	  });
+};
