@@ -11,8 +11,7 @@ import { AuthService } from "src/app/auth.service";
 export class LoginPage implements OnInit {
   username = "";
   password = "";
-
-  //missingUserPass = "";
+  userpasserr = "";
   loginForm = this.formB.group({
     username: ["", [Validators.required]],
     password: ["", [Validators.required]]
@@ -35,7 +34,15 @@ export class LoginPage implements OnInit {
 
     await alert.present();
   }
+  async userPasserror() {
+    const alert = await this.alertController.create({
+      header: "Incorrect username or password",
+      message: this.userpasserr,
+      buttons: ["OK"]
+    });
 
+    await alert.present();
+  }
   register() {
     console.log("go to register");
     this._router.navigate(["/register"]);
@@ -48,19 +55,21 @@ export class LoginPage implements OnInit {
 
     if (!this.loginForm.valid) {
       this.presentAlert();
-      // this.missingUserPass = "Please insert your missing username or password";
       return;
     } else {
-      // this.missingUserPass = "";
-
-      //console.log("your logged");
-      this.loginForm = this.formB.group({
-        username: ["", [Validators.required]],
-        password: ["", [Validators.required]]
-      });
-      console.log(userobj);
-      this._authService.LogIn(userobj);
-      this._router.navigate(["tabs"]);
+      this._authService.LogIn(userobj).subscribe(
+        data => {
+          console.log(data["_body"]);
+          this._router.navigate(["/tabs"]);
+        },
+        error => {
+          console.log(error);
+          var json = JSON.parse(error._body);
+          this.userpasserr = json.msg;
+          this.userPasserror();
+        }
+      );
+      //
     }
   }
 }

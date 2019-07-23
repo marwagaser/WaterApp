@@ -12,6 +12,7 @@ import { Platform, AlertController } from "@ionic/angular";
   providedIn: "root"
 })
 export class AuthService {
+  userNotfound = "";
   private token: string;
   public authorized: boolean;
   constructor(
@@ -56,14 +57,7 @@ export class AuthService {
   }
 
   public LogIn(UserOb) {
-    return this.http.post(environment.apiUrl + "/auth/login", UserOb).subscribe(
-      data => {
-        console.log(data["_body"]);
-      },
-      error => {
-        console.log(error);
-      }
-    );
+    return this.http.post(environment.apiUrl + "/auth/login", UserOb);
   }
 
   public addReg(UserOb) {
