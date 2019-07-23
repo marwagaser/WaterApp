@@ -10,11 +10,8 @@ import { AuthService } from "src/app/auth.service";
 })
 export class LoginPage implements OnInit {
   username = "";
-  name = "";
-  region = "";
-  building;
   password = "";
-  confirmpassword = "";
+
   //missingUserPass = "";
   loginForm = this.formB.group({
     username: ["", [Validators.required]],
@@ -26,7 +23,6 @@ export class LoginPage implements OnInit {
     private formB: FormBuilder,
     public alertController: AlertController,
     public _authService: AuthService
-
   ) {}
 
   ngOnInit() {}
@@ -47,7 +43,8 @@ export class LoginPage implements OnInit {
   login() {
     var userobj = {
       username: this.username,
-      password: this.password}
+      password: this.password
+    };
 
     if (!this.loginForm.valid) {
       this.presentAlert();
@@ -55,7 +52,7 @@ export class LoginPage implements OnInit {
       return;
     } else {
       // this.missingUserPass = "";
-     
+
       //console.log("your logged");
       this.loginForm = this.formB.group({
         username: ["", [Validators.required]],
