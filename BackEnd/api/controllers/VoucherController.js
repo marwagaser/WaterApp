@@ -2,59 +2,115 @@ var express = require('express');
  
 var app = module.exports = express.Router();
  
-var Voucher = require('../models/voucher');
+var Voucher = require('../models/Voucher');
  
 // POST
 // Create a new Voucher
-app.post('/vouchers', function (req, res) {
-  if (!req.body.companyID||!req.body.voucherID||!req.body.title||!req.body.offer||!req.body.price||!req.body.promocode||!req.body.status) {
-    return res.status(400).send({ "success": false, "msg": "You need to fill out all the deatils of the voucher!" });
+module.exports.postVoucher= function (req, res) {
+  var valid =
+		req.body.companyID &&
+		Validations.isString(req.body.companyID) &&
+		req.body.voucherID &&
+		Validations.isString(req.body.voucherID) &&
+		req.body.title &&
+		Validations.isString(req.body.title) &&
+		req.body.offer &&
+    Validations.isString(req.body.offer)&&
+    req.body.price &&
+    Validations.isNumber(req.body.price)&&
+    req.body.promocode &&
+    Validations.isString(req.body.promocode)&&
+    req.body.status &&
+    Validations.isString(req.body.status);
+
+
+    
+  if (!valid) {
+    return res.status(422).json({
+			err: null,
+      msg: "You need to fill out all the deatils of the voucher!" ,
+    data: null
+  });
+
   }
- 
-  var newVoucher = new Voucher({
-    companyID: req.body.companyID,
-    voucherID: req.body.voucherID,
-    title: req.body.title,
-    offer: req.body.offer,
-    price: req.body.price,
-    promocode: req.body.promocode,
-    status: req.body.status,
-    color: req.body.color
-  });
- 
-  newVoucher.save(function (err) {
+  
+  Voucher.create(req.body, function(err, newVoucher) {
     if (err) {
-      console.log("some error: ", err);
-      return res.json({ "success": false, "msg": "Error while creating Voucher", "error": err });
+    
     }
-    res.status(201).send({ "success": true, "msg": 'Successful created new Voucher.' });
-  });
-});
+
+            
+    return res.status(201).json({
+      err: null,
+      msg:
+        "Voucher Created!",
+      data: req.body
+    });
+
+  });	
+ 
+
+};
  
 // GET
 // Get all open Vouchers
-app.get('/vouchers', function (req, res) {
-  Voucher.find({}, function (err, Vouchers) {
-    if (err) {
-      return res.json({ "success": false, "msg": "Error while creating Voucher", "error": err });
-    }
- 
-    res.status(200).send({ "success": true, "result": Vouchers });
-  });
-});
- 
+
+module.exports.getVouchers = function(req, res, next) {
+	Voucher.find({}).exec(function(err, vouchers) {
+		if (err) {
+			return next(err);
+		}
+		if (!vouchers) {
+			return res
+				.status(404)
+				.json({ err: null, msg: "Vouchers not found.", data: null });
+		}
+		res.status(200).json({
+			err: null,
+			msg: "Vouchers retrieved successfully.",
+			data: vouchers
+		});
+	});
+};
+
+
+
+
+
+
+
 // DELETE
 // Remove one Voucher by its ID
-app.delete('/vouchers/:voucherId', function (req, res) {
-  var lectionId = req.params.voucherId;
-  if (!lectionId || lectionId === "") {
-    return res.json({ "success": false, "msg": "You need to send the ID of the Voucher", "error": err });
+
+
+module.exports.deleteVoucher = function(req, res, next) {
+	if (!Validations.isObjectId(req.params.voucherId)) {
+		return res.status(422).json({
+			err: null,
+			msg: "voucherId parameter must be a valid ObjectId.",
+			data: null
+		});
   }
- 
-  Voucher.findByIdAndRemove(lectionId, function (err, removed) {
-    if (err) {
-      return res.json({ "success": false, "msg": "Error while deleting Voucher", "error": err });
+  findByIdAndRemove(req.params.voucherId).exec(function(
+		err,
+		deletedVoucher
+	) {
+		if (err) {
+			return next(err);
+		}
+		if (!deletedVoucher) {
+			return res
+				.status(404)
+				.json({ err: null, msg: "Voucher not found.", data: null });
     }
-    res.status(200).json({ "success": true, "msg": "Voucher deleted" });
+    res.status(200).json({
+      err: null,
+      msg: "Voucher was deleted successfully.",
+      data: deletedVoucher
+    });
   });
-});
+
+
+};
+
+

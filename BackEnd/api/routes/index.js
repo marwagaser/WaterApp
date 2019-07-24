@@ -72,9 +72,9 @@ router.get('/user/getCurrentPoints',isAuthenticated,userCtrl.getCurrentPoints);
 router.get('/company/getCompany/:companyId',isAuthenticated, sponsorCtrl.getCompany);
 router.get('/company/getCompanyName/:_id',isAuthenticated, sponsorCtrl.getCompanyName);
 
-router.get('/voucher/get', voucherCtrl.get);
-router.post('/voucher/post', voucherCtrl.post);
-router.delete('/voucher/delete/:voucherId', voucherCtrl.delete);
+router.get('/voucher/get', voucherCtrl.getVouchers);
+router.post('/voucher/post', voucherCtrl.postVoucher);
+router.delete('/voucher/delete/:voucherId', voucherCtrl.deleteVoucher);
 
 
 

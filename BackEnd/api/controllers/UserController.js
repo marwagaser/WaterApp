@@ -84,38 +84,7 @@ module.exports.getCurrentPoints = function(req, res, next) {
 		});
 	});
 };
-/**
- * Views all the users that their privacy is only public
- * @param username (String)
- * @return json {error} or{ message ,user}
- */
-module.exports.getUser = function(req, res, next) {
-	var valid = req.body.username && Validations.isString(req.body.username);
 
-	if (!valid) {
-		return res.status(422).json({
-			err: null,
-			msg: "Username is a required field",
-			data: null
-		});
-	}
-
-	User.findOne({ username: req.body.username }).exec(function(err, user) {
-		if (err) {
-			return next(err);
-		}
-		if (!user) {
-			return res
-				.status(404)
-				.json({ err: null, msg: "User not found.", data: null });
-		}
-		res.status(200).json({
-			err: null,
-			msg: "User retrieved successfully.",
-			data: user
-		});
-	});
-};
 
 
 /**
@@ -124,7 +93,7 @@ module.exports.getUser = function(req, res, next) {
  * @return json {error} or{ message ,user}
  */
 module.exports.updateUser = function(req, res, next) {
-	var username = req.decodedToken.user.username;
+	//var username = req.decodedToken.user.username;
 	User.findByIdAndUpdate(
 		req.decodedToken.user._id,
 		{
