@@ -61,7 +61,7 @@ export class LoginPage implements OnInit {
         (res:any) => {
           this._authService.setToken(res.data);
           console.log("this",res.data);
-          console.log(res["_body"]);
+    
 
           this.loginForm = this.formB.group({
             username: ["", [Validators.required]],

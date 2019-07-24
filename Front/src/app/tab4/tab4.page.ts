@@ -80,14 +80,18 @@ export class Tab4Page {
   }
   logoutUser() {
     // do back end validation and call logout method
-    // this._authService.signOut();
-    //
+    this._authService.logout();
+  
     this._router.navigate(["/login"]);
   }
   toggle() {
     this.updateHidden = !this.updateHidden;
   }
   updateInfo() {
+    console.log("updatinginfo");
+    this._authService.getCurrentPoints().subscribe(
+      (res:any) => {console.log("data points",res.data)});
+
     if (!this.updateForm.valid) {
       console.log("not valid");
     } else {

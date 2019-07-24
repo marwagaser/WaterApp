@@ -39,6 +39,9 @@ export class AuthService {
   getAuthorizationToken() {
     return this.token;
   }
+  getCurrentPoints(){
+    return this.http.get(environment.apiUrl + "/user/getCurrentPoints").map(res => res.json());
+  }
 
   setToken(token: string) {
     this.token = token;
