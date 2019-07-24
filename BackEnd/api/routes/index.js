@@ -68,7 +68,10 @@ router.post("/auth/login", isNotAuthenticated, authCtrl.login);
 router.get("/user/getUsers", isAuthenticated, userCtrl.getUsers);
 
 
-router.get('/product/getCompany/:companyId',isAuthenticated, sponsorCtrl.getCompany);
+router.get('/company/getCompany/:companyId',isAuthenticated, sponsorCtrl.getCompany);
+router.get('/company/getCompanyName/:_id', sponsorCtrl.getCompanyName);
+
+
 
 /*productCtrl = require('../controllers/ProductController');
   

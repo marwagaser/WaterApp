@@ -9,6 +9,8 @@ var mongoose = require("mongoose"),
 var bodyParser = require("body-parser");
 const express = require("express");
 var app = express();
+
+
 cloudinary.config({  //Your Cloudinary API Data
 	cloud_name: 'dgwildqsv',
 	api_key: '885116352125168',
