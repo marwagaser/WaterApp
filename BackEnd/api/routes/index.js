@@ -15,6 +15,7 @@ cloudinary.config({
 });
 (userCtrl = require("../controllers/UserController")),
 (sponsorCtrl = require("../controllers/SponsorController")),
+(voucherCtrl = require("../controllers/VoucherController")),
 
   (authCtrl = require("../controllers/AuthenticationController"));
 
@@ -70,6 +71,10 @@ router.get('/user/getCurrentPoints',isAuthenticated,userCtrl.getCurrentPoints);
 
 router.get('/company/getCompany/:companyId',isAuthenticated, sponsorCtrl.getCompany);
 router.get('/company/getCompanyName/:_id',isAuthenticated, sponsorCtrl.getCompanyName);
+
+router.get('/voucher/get', voucherCtrl.get);
+router.post('/voucher/post', voucherCtrl.post);
+router.delete('/voucher/delete/:voucherId', voucherCtrl.delete);
 
 
 
