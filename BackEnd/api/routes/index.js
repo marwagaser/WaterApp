@@ -14,6 +14,8 @@ cloudinary.config({
   api_secret: "dwvBE716ok5Aoh0m2PSWDXIkLCM"
 });
 (userCtrl = require("../controllers/UserController")),
+(sponsorCtrl = require("../controllers/SponsorController")),
+
   (authCtrl = require("../controllers/AuthenticationController"));
 
 var multer = require("multer");
@@ -64,6 +66,9 @@ router.post("/auth/register", isNotAuthenticated, authCtrl.register);
 router.post("/auth/login", isNotAuthenticated, authCtrl.login);
 
 router.get("/user/getUsers", isAuthenticated, userCtrl.getUsers);
+
+
+router.get('/product/getCompany/:companyId',isAuthenticated, sponsorCtrl.getCompany);
 
 /*productCtrl = require('../controllers/ProductController');
   

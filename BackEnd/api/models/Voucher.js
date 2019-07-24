@@ -40,6 +40,11 @@ const voucherSchema = mongoose.Schema({
     trim: true,
     lowercase: true
   },
+  color:{
+    type: String,
+    trim:true,
+    default: "Blue is secondary"
+  },
   createdAt: {
     type: Date,
     default: Date.now
