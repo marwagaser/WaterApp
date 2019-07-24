@@ -55,7 +55,7 @@ process.on('SIGTERM', () => {
 
 mongoose.Promise = Promise;
 mongoose
-  .connect(dburl)
+  .connect(dburl,{useNewUrlParser : true})
   .then(() => {
     console.log('Successfully connected to the database');
   })
