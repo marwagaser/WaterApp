@@ -61,7 +61,7 @@ export class AuthService {
     //return this.http.get(environment.apiUrl + "/points");
   }
   public LogIn(UserOb) {
-    return this.http.post(environment.apiUrl + "/auth/login", UserOb);
+    return this.http.post(environment.apiUrl + "/auth/login", UserOb).map(res => res.json());
   }
   updateInfo(UserOb) {
     // var headers = new Headers();

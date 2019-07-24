@@ -64,6 +64,26 @@ module.exports.getUserByUsername = function(req, res, next) {
 	});
 };
 
+
+module.exports.getCurrentPoints = function(req, res, next) {
+	if (!Validations.isString(req.decodedToken.user.username)) {
+		return res.status(422).json({
+			err: null,
+			msg: "type parameter must be a valid String.",
+			data: null
+		});
+	}
+	User.find({ username: req.decodedToken.user.username }).exec(function(err, user) {
+		if (err) {
+			return next(err);
+		}
+		res.status(200).json({
+			err: null,
+			msg: "Current user points retrieved successfully.",
+			data: user.points
+		});
+	});
+};
 /**
  * Views all the users that their privacy is only public
  * @param username (String)

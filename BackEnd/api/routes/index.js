@@ -66,10 +66,10 @@ router.post("/auth/register", isNotAuthenticated, authCtrl.register);
 router.post("/auth/login", isNotAuthenticated, authCtrl.login);
 
 router.get("/user/getUsers", isAuthenticated, userCtrl.getUsers);
-
+router.get('/user/getCurrentPoints',isAuthenticated,userCtrl.getCurrentPoints);
 
 router.get('/company/getCompany/:companyId',isAuthenticated, sponsorCtrl.getCompany);
-router.get('/company/getCompanyName/:_id', sponsorCtrl.getCompanyName);
+router.get('/company/getCompanyName/:_id',isAuthenticated, sponsorCtrl.getCompanyName);
 
 
 

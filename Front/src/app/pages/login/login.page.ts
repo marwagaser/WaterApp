@@ -58,8 +58,11 @@ export class LoginPage implements OnInit {
       return;
     } else {
       this._authService.LogIn(userobj).subscribe(
-        data => {
-          console.log(data["_body"]);
+        (res:any) => {
+          this._authService.setToken(res.data);
+          console.log("this",res.data);
+          console.log(res["_body"]);
+
           this.loginForm = this.formB.group({
             username: ["", [Validators.required]],
             password: ["", [Validators.required]]
