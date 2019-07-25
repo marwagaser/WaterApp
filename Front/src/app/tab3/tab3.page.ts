@@ -9,13 +9,13 @@ import { VoucherService } from '../services/voucher-service';
   styleUrls: ['tab3.page.scss']
 })
 export class Tab3Page {
-  Vouchers: Observable<any>;
+  vouchers: Observable<any>;
   constructor(public navCtrl: NavController, public voucherService: VoucherService,
               public alertCtrl: AlertController, public toastCtrl: ToastController) {
      this.loadVouchers();
    }
    loadVouchers() {
-     this.Vouchers = this.voucherService.getVouchers();
+     this.vouchers = this.voucherService.getVouchers();
    }
    async addVoucher() {
      const prompt = await this.alertCtrl.create({

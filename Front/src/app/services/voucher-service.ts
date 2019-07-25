@@ -10,7 +10,7 @@ export class VoucherService {
   constructor(public http: Http, public appSettings: AppSettings) {
   }
  public getVouchers() {
-    return this.http.get(this.apiUrl + 'voucher/get')
+    return this.http.get('http://localhost:3000/api/voucher/get')
       .pipe(map(response => response.json().result));
   }
   public addVoucher(newVoucher) {
@@ -25,7 +25,7 @@ export class VoucherService {
       .pipe(map(response => response.json()));
   }
   public deleteVoucher(VoucherId) {
-    return this.http.delete(this.apiUrl + 'voucher/delete' + VoucherId)
+    return this.http.delete('http://localhost:3000/api/voucher/delete/' + VoucherId)
       .pipe(map(response => response.json()));
   }
 }
