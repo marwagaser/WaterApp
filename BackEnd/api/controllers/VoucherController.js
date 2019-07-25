@@ -8,10 +8,24 @@ var Voucher = require('../models/Voucher');
 // Create a new Voucher
 module.exports.postVoucher= function (req, res) {
 
+<<<<<<< HEAD
 	if (!req.body.companyID||!req.body.voucherID||!req.body.title||!req.body.offer||!req.body.price||!req.body.promocode||!req.body.status) {
     return res.status(400).send({ "success": false, "msg": "You need to fill out all the deatils of the offer!" });
 	}
 	
+=======
+  console.log("checked validity");
+    
+  if (!valid) {
+    return res.status(422).json({
+			err: null,
+      msg: "You need to fill out all the deatils of the voucher!" ,
+    data: null
+  });
+
+  }
+  
+>>>>>>> 8fee7b2b716fffde8c2ffff5d1892b80573d1698
   Voucher.create(req.body, function(err, newVoucher) {
     if (err) {
     

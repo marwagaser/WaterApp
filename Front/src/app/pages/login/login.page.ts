@@ -69,9 +69,9 @@ export class LoginPage implements OnInit {
           });
           this._router.navigate(['/tabs']);
         },
-        error => {
-          console.log(error);
-          var json = JSON.parse(error._body);
+        (err: any) => {
+          console.log(err);
+          var json = JSON.parse(err._body);
           this.userpasserr = json.msg;
           this.userPasserror();
         }

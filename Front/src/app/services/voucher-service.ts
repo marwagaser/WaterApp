@@ -25,7 +25,7 @@ export class VoucherService {
       .pipe(map(response => response.json()));
   }
   public deleteVoucher(VoucherId) {
-    return this.http.delete(this.apiUrl + 'vouchers/' + VoucherId)
+    return this.http.delete(this.apiUrl + 'voucher/delete' + VoucherId)
       .pipe(map(response => response.json()));
   }
 }

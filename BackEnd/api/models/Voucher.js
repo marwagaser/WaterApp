@@ -2,14 +2,14 @@ var mongoose = require('mongoose');
   
 var VoucherSchema = new mongoose.Schema({
     companyID: {
-        type: Number,
+        type: String,
         required: true,
-        min: 0
+        
       },
       voucherID: {
-        type: Number,
+        type: String,
         required: true,
-        min: 0
+       
       },
       title: {
         type: String,
