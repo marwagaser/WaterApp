@@ -74,7 +74,7 @@ router.get('/company/getCompanyName/:_id',isAuthenticated, sponsorCtrl.getCompan
 
 router.get('/voucher/get', voucherCtrl.getVouchers);
 router.post('/voucher/post', voucherCtrl.postVoucher);
-router.delete('/voucher/delete/:voucherId', voucherCtrl.deleteVoucher);
+router.delete('/voucher/delete/:_id', voucherCtrl.deleteVoucher);
 
 
 

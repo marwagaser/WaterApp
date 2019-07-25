@@ -1,4 +1,5 @@
 var express = require('express');
+const mongoose = require('mongoose');
  
 var app = module.exports = express.Router();
  
@@ -8,24 +9,10 @@ var Voucher = require('../models/Voucher');
 // Create a new Voucher
 module.exports.postVoucher= function (req, res) {
 
-<<<<<<< HEAD
 	if (!req.body.companyID||!req.body.voucherID||!req.body.title||!req.body.offer||!req.body.price||!req.body.promocode||!req.body.status) {
     return res.status(400).send({ "success": false, "msg": "You need to fill out all the deatils of the offer!" });
 	}
 	
-=======
-  console.log("checked validity");
-    
-  if (!valid) {
-    return res.status(422).json({
-			err: null,
-      msg: "You need to fill out all the deatils of the voucher!" ,
-    data: null
-  });
-
-  }
-  
->>>>>>> 8fee7b2b716fffde8c2ffff5d1892b80573d1698
   Voucher.create(req.body, function(err, newVoucher) {
     if (err) {
     
@@ -48,21 +35,13 @@ module.exports.postVoucher= function (req, res) {
 // Get all open Vouchers
 
 module.exports.getVouchers = function(req, res, next) {
-	Voucher.find({}).exec(function(err, vouchers) {
-		if (err) {
-			return next(err);
-		}
-		if (!vouchers) {
-			return res
-				.status(404)
-				.json({ err: null, msg: "Vouchers not found.", data: null });
-		}
-		res.status(200).json({
-			err: null,
-			msg: "Vouchers retrieved successfully.",
-			data: vouchers
-		});
-	});
+	Voucher.find({}, function (err, offers) {
+    if (err) {
+      return res.json({ "success": false, "msg": "Error while creating Offer", "error": err });
+    }
+ 
+    res.status(200).send({ "success": true, "result": offers });
+  });
 };
 
 
@@ -75,34 +54,33 @@ module.exports.getVouchers = function(req, res, next) {
 // Remove one Voucher by its ID
 
 
-module.exports.deleteVoucher = function(req, res, next) {
-	if (!Validations.isObjectId(req.params.voucherId)) {
-		return res.status(422).json({
-			err: null,
-			msg: "voucherId parameter must be a valid ObjectId.",
-			data: null
-		});
-  }
-  findByIdAndRemove(req.params.voucherId).exec(function(
-		err,
-		deletedVoucher
-	) {
-		if (err) {
-			return next(err);
-		}
-		if (!deletedVoucher) {
-			return res
-				.status(404)
-				.json({ err: null, msg: "Voucher not found.", data: null });
-    }
-    res.status(200).json({
-      err: null,
-      msg: "Voucher was deleted successfully.",
-      data: deletedVoucher
-    });
+
+
+
+
+
+app.deleteVoucher = function(req, res, next) {
+
+var str = req.params._id;
+var mongoObjectId = mongoose.Types.ObjectId(str);
+  Voucher.findByIdAndRemove(mongoObjectId)
+  .then(Voucher => {
+      if(!Voucher) {
+          return res.status(404).send({
+              message: "1 Voucher not found with the id " + mongoObjectId
+          });
+      }
+      res.send({message: "2 Voucher deleted successfully!"});
+  }).catch(err => {
+      if(err.kind === 'ObjectId' || err.name === 'NotFound') {
+          return res.status(404).send({
+              message: "3 Voucher not found with id " + mongoObjectId
+          });                
+      }
+      return res.status(500).send({
+          message: "4 Could not delete Voucher with id " + mongoObjectId
+      });
   });
-
-
-};
-
+	
+	};
 
