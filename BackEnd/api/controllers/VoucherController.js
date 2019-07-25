@@ -7,33 +7,11 @@ var Voucher = require('../models/Voucher');
 // POST
 // Create a new Voucher
 module.exports.postVoucher= function (req, res) {
-  var valid =
-		req.body.companyID &&
-		Validations.isString(req.body.companyID) &&
-		req.body.voucherID &&
-		Validations.isString(req.body.voucherID) &&
-		req.body.title &&
-		Validations.isString(req.body.title) &&
-		req.body.offer &&
-    Validations.isString(req.body.offer)&&
-    req.body.price &&
-    Validations.isNumber(req.body.price)&&
-    req.body.promocode &&
-    Validations.isString(req.body.promocode)&&
-    req.body.status &&
-    Validations.isString(req.body.status);
 
-
-    
-  if (!valid) {
-    return res.status(422).json({
-			err: null,
-      msg: "You need to fill out all the deatils of the voucher!" ,
-    data: null
-  });
-
-  }
-  
+	if (!req.body.companyID||!req.body.voucherID||!req.body.title||!req.body.offer||!req.body.price||!req.body.promocode||!req.body.status) {
+    return res.status(400).send({ "success": false, "msg": "You need to fill out all the deatils of the offer!" });
+	}
+	
   Voucher.create(req.body, function(err, newVoucher) {
     if (err) {
     
