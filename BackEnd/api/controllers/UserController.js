@@ -64,7 +64,6 @@ module.exports.getUserByUsername = function(req, res, next) {
 };
 
 module.exports.getCurrentPoints = function(req, res, next) {
-  console.log("accessed get current points");
   if (!Validations.isString(req.decodedToken.user.username)) {
     return res.status(422).json({
       err: null,
@@ -83,7 +82,8 @@ module.exports.getCurrentPoints = function(req, res, next) {
     res.status(200).json({
       err: null,
       msg: "Current user points retrieved successfully.",
-      data: user.points
+      data: req.decodedToken.user.points,
+      name: req.decodedToken.user.name
     });
   });
 };

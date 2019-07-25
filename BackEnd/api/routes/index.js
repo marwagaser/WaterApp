@@ -27,7 +27,7 @@ router.get("/", function(req, res, next) {
 /////////////////////////////
 var isAuthenticated = function(req, res, next) {
   var token = req.headers["authorization"];
-  console.log(req.header);
+
   token = req.headers.authorization.split("Bearer ")[1];
   if (!token) {
     return res.status(401).json({
@@ -45,7 +45,6 @@ var isAuthenticated = function(req, res, next) {
       });
     }
     req.decodedToken = decodedToken;
-    console.log(req.decodedToken);
     next();
   });
 };

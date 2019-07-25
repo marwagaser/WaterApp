@@ -1,63 +1,64 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Validators, FormBuilder } from '@angular/forms';
-import { PasswordValidation } from '../passwordValidation';
-import { AlertController } from '@ionic/angular';
-import { AuthService } from '../../auth.service';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { Validators, FormBuilder } from "@angular/forms";
+import { PasswordValidation } from "../passwordValidation";
+import { AlertController } from "@ionic/angular";
+import { AuthService } from "../../auth.service";
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss']
+  selector: "app-home",
+  templateUrl: "./home.page.html",
+  styleUrls: ["./home.page.scss"]
 })
 export class HomePage implements OnInit {
   // formNotValid = "";
-  username = '';
+  username = "";
   userExists = false;
-  name = '';
-  region = '';
+  name = "";
+  region = "";
   building;
-  password = '';
-  confirmpassword = '';
+  password = "";
+  confirmpassword = "";
+  points = 120;
   signupForm = this.formB.group(
     {
       username: [
-        '',
+        "",
         [
           Validators.required,
           Validators.minLength(5),
-          Validators.pattern('^[a-zA-Z0-9_]*$')
+          Validators.pattern("^[a-zA-Z0-9_]*$")
         ]
       ],
       name: [
-        '',
+        "",
         [
           Validators.required,
-          Validators.pattern('^[a-zA-Z]*$'),
+          Validators.pattern("^[a-zA-Z]*$"),
           Validators.minLength(3)
         ]
       ],
       region: [
-        '',
+        "",
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.pattern('^[a-zA-Z0-9 ]*$')
+          Validators.pattern("^[a-zA-Z0-9 ]*$")
         ]
       ],
 
       buildingNumber: [
-        '',
+        "",
         [Validators.required, Validators.min(1), Validators.max(999)]
       ],
       password: [
-        '',
+        "",
         [
           Validators.required,
           Validators.minLength(8),
-          Validators.pattern('^[^\\s]+$')
+          Validators.pattern("^[^\\s]+$")
         ]
       ],
-      confirmpassword: ['', [Validators.required]]
+      confirmpassword: ["", [Validators.required]]
     },
     { validator: PasswordValidation.MatchPassword }
   );
@@ -74,9 +75,9 @@ export class HomePage implements OnInit {
 
   async presentAlert() {
     const alert = await this.alertController.create({
-      header: 'Incorrect registration data',
-      message: 'Please correct invalid fields',
-      buttons: ['OK']
+      header: "Incorrect registration data",
+      message: "Please correct invalid fields",
+      buttons: ["OK"]
     });
 
     await alert.present();
@@ -84,25 +85,25 @@ export class HomePage implements OnInit {
 
   async takenUser() {
     const alert = await this.alertController.create({
-      header: 'Username is taken',
-      message: 'Please choose another avaliable username',
-      buttons: ['OK']
+      header: "Username is taken",
+      message: "Please choose another avaliable username",
+      buttons: ["OK"]
     });
 
     await alert.present();
   }
   async regionReq() {
     const alert = await this.alertController.create({
-      header: 'Incorrect registration data',
-      message: 'Region cannot be empty',
-      buttons: ['OK']
+      header: "Incorrect registration data",
+      message: "Region cannot be empty",
+      buttons: ["OK"]
     });
 
     await alert.present();
   }
   login() {
-    console.log('go to login');
-    this._router.navigate(['/login']);
+    console.log("go to login");
+    this._router.navigate(["/login"]);
   }
   register() {
     if (!this.signupForm.valid) {
@@ -110,7 +111,7 @@ export class HomePage implements OnInit {
       // this.formNotValid = "There are some incorrect fields.";
     } else {
       if (this.region != null) {
-        if (this.region.trim() === '') {
+        if (this.region.trim() === "") {
           this.regionReq();
         } else {
           // tslint:disable-next-line:prefer-const
@@ -120,12 +121,13 @@ export class HomePage implements OnInit {
             region: this.region,
             building: this.building,
             password: this.password,
-            confirmPassword: this.confirmpassword
+            confirmPassword: this.confirmpassword,
+            points: this.points
           };
           this._authService.addReg(userobj).subscribe(
             data => {
               // tslint:disable-next-line:no-string-literal
-              console.log(data['_body']);
+              console.log(data["_body"]);
               // tslint:disable-next-line:quotemark
               this._router.navigate(["/login"]);
             },

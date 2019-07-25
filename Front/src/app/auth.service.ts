@@ -71,9 +71,11 @@ export class AuthService {
     console.log(
       "hala " + JSON.stringify(headers) + headers.get("Authorization")
     );
-    return this.http.get(environment.apiUrl + "/user/getCurrentPoints", {
-      headers
-    });
+    return this.http
+      .get(environment.apiUrl + "/user/getCurrentPoints", {
+        headers
+      })
+      .map(res => res.json());
   }
 
   updateInfo(UserOb) {

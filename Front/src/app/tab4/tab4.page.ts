@@ -12,15 +12,15 @@ import { AuthService } from "../auth.service";
 })
 export class Tab4Page implements OnInit {
   updateHidden = false;
-  //clientName = //the name of the user should be passed to me;
+  clientName = ""; //the name of the user should be passed to me;
   // current: number = //the one which i should get from the service;
   name = null;
   region = null;
   building = null;
   password = null;
   confirmpassword = null;
-  current: number = 27;
-  max: number = 100;
+  current: number = 0;
+  max: number = 2000;
   stroke: number = 15;
   radius: number = 140;
   semicircle: boolean = false;
@@ -64,10 +64,14 @@ export class Tab4Page implements OnInit {
       }
     }
     this._authService.getPoints().subscribe((res: any) => {
-      console.log("data points", res.data);
+      // res.toString();
+      this.current = res.data;
+      this.clientName = res.name;
     });
   }
-  ngOnInit() {}
+  ngOnInit() {
+    //this._authService.getPoints().subscribe((res: any) => {});
+  }
   getOverlayStyle() {
     let isSemi = this.semicircle;
     let transform = (isSemi ? "" : "translateY(-50%) ") + "translateX(-50%)";
