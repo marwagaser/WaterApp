@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from "@angular/core";
+import { Component, ViewEncapsulation, OnInit } from "@angular/core";
 import { RoundProgressEase } from "angular-svg-round-progressbar";
 import { Router } from "@angular/router";
 import { Validators, FormBuilder } from "@angular/forms";
@@ -10,7 +10,7 @@ import { AuthService } from "../auth.service";
   styleUrls: ["tab4.page.scss"],
   encapsulation: ViewEncapsulation.None
 })
-export class Tab4Page {
+export class Tab4Page implements OnInit {
   updateHidden = false;
   //clientName = //the name of the user should be passed to me;
   // current: number = //the one which i should get from the service;
@@ -63,7 +63,11 @@ export class Tab4Page {
         this.animations.push(prop);
       }
     }
+    this._authService.getPoints().subscribe((res: any) => {
+      console.log("data points", res.data);
+    });
   }
+  ngOnInit() {}
   getOverlayStyle() {
     let isSemi = this.semicircle;
     let transform = (isSemi ? "" : "translateY(-50%) ") + "translateX(-50%)";
@@ -81,7 +85,7 @@ export class Tab4Page {
   logoutUser() {
     // do back end validation and call logout method
     this._authService.logout();
-  
+
     this._router.navigate(["/login"]);
   }
   toggle() {
@@ -89,8 +93,6 @@ export class Tab4Page {
   }
   updateInfo() {
     console.log("updatinginfo");
-    this._authService.getCurrentPoints().subscribe(
-      (res:any) => {console.log("data points",res.data)});
 
     if (!this.updateForm.valid) {
       console.log("not valid");

@@ -1,20 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Validators, FormBuilder } from '@angular/forms';
-import { AlertController } from '@ionic/angular';
-import { AuthService } from '../../auth.service';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { Validators, FormBuilder } from "@angular/forms";
+import { AlertController } from "@ionic/angular";
+import { AuthService } from "../../auth.service";
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss']
+  selector: "app-login",
+  templateUrl: "./login.page.html",
+  styleUrls: ["./login.page.scss"]
 })
 export class LoginPage implements OnInit {
-  username = '';
-  password = '';
-  userpasserr = '';
+  username = "";
+  password = "";
+  userpasserr = "";
   loginForm = this.formB.group({
-    username: ['', [Validators.required]],
-    password: ['', [Validators.required]]
+    username: ["", [Validators.required]],
+    password: ["", [Validators.required]]
   });
 
   constructor(
@@ -29,25 +29,25 @@ export class LoginPage implements OnInit {
   ngOnInit() {}
   async presentAlert() {
     const alert = await this.alertController.create({
-      header: 'Incorrect username or password',
-      message: 'Please insert missing username or password',
-      buttons: ['OK']
+      header: "Incorrect username or password",
+      message: "Please insert missing username or password",
+      buttons: ["OK"]
     });
 
     await alert.present();
   }
   async userPasserror() {
     const alert = await this.alertController.create({
-      header: 'Incorrect username or password',
+      header: "Incorrect username or password",
       message: this.userpasserr,
-      buttons: ['OK']
+      buttons: ["OK"]
     });
 
     await alert.present();
   }
   register() {
-    console.log('go to register');
-    this._router.navigate(['/register']);
+    console.log("go to register");
+    this._router.navigate(["/register"]);
   }
   login() {
     var userobj = {
@@ -62,12 +62,12 @@ export class LoginPage implements OnInit {
       this._authService.LogIn(userobj).subscribe(
         (res: any) => {
           this._authService.setToken(res.data);
-          console.log('this', res.data);
+          console.log("this", res.data);
           this.loginForm = this.formB.group({
-            username: ['', [Validators.required]],
-            password: ['', [Validators.required]]
+            username: ["", [Validators.required]],
+            password: ["", [Validators.required]]
           });
-          this._router.navigate(['/tabs']);
+          this._router.navigate(["/tabs"]);
         },
         (err: any) => {
           console.log(err);
