@@ -19,7 +19,6 @@ export class AuthService {
     private httpClient: HttpClient,
     private alertController: AlertController
   ) {
-    this.token = window.localStorage.token;
     if (this.token) {
       this.authorized = true;
     } else {
@@ -36,36 +35,47 @@ export class AuthService {
     // tslint:disable-next-line:no-shadowed-variable
     alert.then(alert => alert.present());
   }
-  getAuthorizationToken() {
-    return this.token;
-  }
-  getCurrentPoints(){
-    return this.http.get(environment.apiUrl + "/user/getCurrentPoints").map(res => res.json());
-  }
 
   setToken(token: string) {
-    this.token = token;
-    window.localStorage.token = this.token;
+    window.localStorage.setItem("token", token);
+    console.log(token);
+    this.token = window.localStorage.getItem("token");
+    console.log(this.token);
     this.authorized = true;
   }
-
-  getProfile() {
-    return this.http.get(environment.apiUrl + "user/profile");
+  getAuthorizationToken() {
+    return localStorage.getItem("token");
   }
+
   logout() {
     this.authorized = false;
     this.token = null;
-    delete window.localStorage.token;
+    window.localStorage.setItem("token", null);
+    window.localStorage.removeItem("token");
   }
   signOut() {
     // return this.http.get(environment.apiUrl + "/logout");
   }
-  getPoints() {
-    //return this.http.get(environment.apiUrl + "/points");
-  }
+
   public LogIn(UserOb) {
-    return this.http.post(environment.apiUrl + "/auth/login", UserOb).map(res => res.json());
+    return this.http
+      .post(environment.apiUrl + "/auth/login", UserOb)
+      .map(res => res.json());
   }
+  getPoints() {
+    console.log("visited");
+    var headers = new Headers();
+    headers.append("Authorization", "Bearer " + this.getAuthorizationToken());
+    headers.append("Content-Type", "application/json");
+    console.log(this.getAuthorizationToken());
+    console.log(
+      "hala " + JSON.stringify(headers) + headers.get("Authorization")
+    );
+    return this.http.get(environment.apiUrl + "/user/getCurrentPoints", {
+      headers
+    });
+  }
+
   updateInfo(UserOb) {
     // var headers = new Headers();
     // headers.append("content-type", "application/json");

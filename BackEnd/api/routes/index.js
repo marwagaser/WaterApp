@@ -14,9 +14,8 @@ cloudinary.config({
   api_secret: "dwvBE716ok5Aoh0m2PSWDXIkLCM"
 });
 (userCtrl = require("../controllers/UserController")),
-(sponsorCtrl = require("../controllers/SponsorController")),
-(voucherCtrl = require("../controllers/VoucherController")),
-
+  (sponsorCtrl = require("../controllers/SponsorController")),
+  (voucherCtrl = require("../controllers/VoucherController")),
   (authCtrl = require("../controllers/AuthenticationController"));
 
 var multer = require("multer");
@@ -28,6 +27,8 @@ router.get("/", function(req, res, next) {
 /////////////////////////////
 var isAuthenticated = function(req, res, next) {
   var token = req.headers["authorization"];
+  console.log(req.header);
+  token = req.headers.authorization.split("Bearer ")[1];
   if (!token) {
     return res.status(401).json({
       error: null,
@@ -44,6 +45,7 @@ var isAuthenticated = function(req, res, next) {
       });
     }
     req.decodedToken = decodedToken;
+    console.log(req.decodedToken);
     next();
   });
 };
@@ -67,16 +69,26 @@ router.post("/auth/register", isNotAuthenticated, authCtrl.register);
 router.post("/auth/login", isNotAuthenticated, authCtrl.login);
 
 router.get("/user/getUsers", isAuthenticated, userCtrl.getUsers);
-router.get('/user/getCurrentPoints',isAuthenticated,userCtrl.getCurrentPoints);
+router.get(
+  "/user/getCurrentPoints",
+  isAuthenticated,
+  userCtrl.getCurrentPoints
+);
 
-router.get('/company/getCompany/:companyId',isAuthenticated, sponsorCtrl.getCompany);
-router.get('/company/getCompanyName/:_id',isAuthenticated, sponsorCtrl.getCompanyName);
+router.get(
+  "/company/getCompany/:companyId",
+  isAuthenticated,
+  sponsorCtrl.getCompany
+);
+router.get(
+  "/company/getCompanyName/:_id",
+  isAuthenticated,
+  sponsorCtrl.getCompanyName
+);
 
-router.get('/voucher/get', voucherCtrl.getVouchers);
-router.post('/voucher/post', voucherCtrl.postVoucher);
-router.delete('/voucher/delete/:_id', voucherCtrl.deleteVoucher);
-
-
+router.get("/voucher/get", voucherCtrl.getVouchers);
+router.post("/voucher/post", voucherCtrl.postVoucher);
+router.delete("/voucher/delete/:_id", voucherCtrl.deleteVoucher);
 
 /*productCtrl = require('../controllers/ProductController');
   
