@@ -62,14 +62,8 @@ export class LoginPage implements OnInit {
       this._authService.LogIn(userobj).subscribe(
         (res: any) => {
           this._authService.setToken(res.data);
-<<<<<<< HEAD
           console.log("this",res.data);
     
-=======
-          console.log('this', res.data);
-          // tslint:disable-next-line:no-string-literal
-          console.log(res['_body']);
->>>>>>> 1f2ebbe5f5f0809afe9578c000e8f8db9ac949e4
 
           this.loginForm = this.formB.group({
             username: ['', [Validators.required]],
@@ -77,9 +71,9 @@ export class LoginPage implements OnInit {
           });
           this._router.navigate(['/tabs']);
         },
-        error => {
-          console.log(error);
-          var json = JSON.parse(error._body);
+        (err: any) => {
+          console.log(err);
+          var json = JSON.parse(err._body);
           this.userpasserr = json.msg;
           this.userPasserror();
         }
