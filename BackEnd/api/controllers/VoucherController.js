@@ -23,7 +23,7 @@ module.exports.postVoucher= function (req, res) {
     req.body.status &&
     Validations.isString(req.body.status);
 
-
+  console.log("checked validity");
     
   if (!valid) {
     return res.status(422).json({

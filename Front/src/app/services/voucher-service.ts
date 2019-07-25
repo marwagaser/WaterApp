@@ -6,15 +6,15 @@ import { map } from 'rxjs/operators';
 
 @Injectable()
 export class VoucherService {
-  apiUrl = 'http://localhost:3000/';
+  apiUrl = 'http://localhost:3000/api/';
   constructor(public http: Http, public appSettings: AppSettings) {
   }
  public getVouchers() {
-    return this.http.get(this.apiUrl + 'vouchers')
+    return this.http.get(this.apiUrl + 'voucher/get')
       .pipe(map(response => response.json().result));
   }
   public addVoucher(newVoucher) {
-    return this.http.post(this.apiUrl + 'vouchers', {companyID: newVoucher.companyID,
+    return this.http.post(this.apiUrl + 'voucher/post', {companyID: newVoucher.companyID,
         voucherID: newVoucher.voucherID,
         title: newVoucher.title,
         offer: newVoucher.offer,
@@ -25,7 +25,7 @@ export class VoucherService {
       .pipe(map(response => response.json()));
   }
   public deleteVoucher(VoucherId) {
-    return this.http.delete(this.apiUrl + 'vouchers/' + VoucherId)
+    return this.http.delete(this.apiUrl + 'voucher/delete' + VoucherId)
       .pipe(map(response => response.json()));
   }
 }
