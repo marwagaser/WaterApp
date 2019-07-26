@@ -1,10 +1,10 @@
 export class Voucher {
-  companyID: String;
-  voucherID: String;
-  title: String;
-  offer: String;
-  price: String;
-  promocode: String;
-  status: String;
-  color: String;
+  companyID: string;
+  voucherID: string;
+  title: string;
+  offer: string;
+  price: number;
+  promocode: string;
+  status: string;
+  color: string;
 }

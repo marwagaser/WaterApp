@@ -11,7 +11,6 @@ import { Voucher } from "../../objects/Voucher";
   styleUrls: ["./home.page.scss"]
 })
 export class HomePage implements OnInit {
-  // formNotValid = "";
   username = "";
   userExists = false;
   name = "";
@@ -20,7 +19,6 @@ export class HomePage implements OnInit {
   password = "";
   confirmpassword = "";
   points = 120;
-  vouchers: Voucher[] = [];
   signupForm = this.formB.group(
     {
       username: [
@@ -65,11 +63,9 @@ export class HomePage implements OnInit {
     { validator: PasswordValidation.MatchPassword }
   );
   constructor(
-    // tslint:disable-next-line:variable-name
     private _router: Router,
     private formB: FormBuilder,
     public alertController: AlertController,
-    // tslint:disable-next-line:variable-name
     public _authService: AuthService
   ) {}
 
@@ -125,7 +121,7 @@ export class HomePage implements OnInit {
             password: this.password,
             confirmPassword: this.confirmpassword,
             points: 200
-          //  vouchers: this.vouchers
+            // vouchers: this.vouchers
           };
           this._authService.addReg(userobj).subscribe(
             data => {

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 var Voucher = mongoose.Schema.Types.Voucher;
 
 const userSchema = mongoose.Schema({
@@ -7,7 +7,6 @@ const userSchema = mongoose.Schema({
     required: true,
     trim: true,
     lowercase: true
-
   },
   password: {
     type: String,
@@ -22,7 +21,7 @@ const userSchema = mongoose.Schema({
   region: {
     type: String,
     required: true,
-    trim: true,
+    trim: true
   },
   building: {
     type: Number,
@@ -36,8 +35,9 @@ const userSchema = mongoose.Schema({
   },
   vouchers: {
     type: [Voucher],
-    status:[String],
+    status: [String],
     required: false,
+    default: []
   },
 
   createdAt: {
@@ -47,4 +47,4 @@ const userSchema = mongoose.Schema({
   updatedAt: Date
 });
 
-mongoose.model('User', userSchema);
+mongoose.model("User", userSchema);
