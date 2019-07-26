@@ -12,9 +12,8 @@ module.exports.postVoucher= function (req, res) {
     
  Voucher.create(req.body, function(err, newVoucher) {
    if (err) {
-  
-   }
- 
+   }  
+
           
    return res.status(201).json({
      err: null,
@@ -37,11 +36,6 @@ module.exports.getVouchers = function(req, res, next) {
    res.status(200).send({ "success": true, "result": offers });
  });
 };
- 
- 
- 
- 
- 
  
  
 // DELETE
@@ -77,3 +71,18 @@ var mongoObjectId = mongoose.Types.ObjectId(str);
  });
     
     };
+
+
+    app.findVoucher = function(req, res, next) {
+ 
+        var str = req.params._id;
+        var mongoObjectId = mongoose.Types.ObjectId(str);
+        Voucher.findOne(mongoObjectId, function (err,doc) {
+            if (err) {
+              return res.json({ "success": false, "msg": "Error while finding Offer", "error": err });
+            }
+            res.send(doc);
+          });
+            
+            };
+    
