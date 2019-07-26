@@ -4,7 +4,7 @@ import { Validators, FormBuilder } from "@angular/forms";
 import { PasswordValidation } from "../passwordValidation";
 import { AlertController } from "@ionic/angular";
 import { AuthService } from "../../auth.service";
-import { Voucher } from "../../objects/Voucher";
+
 @Component({
   selector: "app-home",
   templateUrl: "./home.page.html",
@@ -112,7 +112,6 @@ export class HomePage implements OnInit {
         if (this.region.trim() === "") {
           this.regionReq();
         } else {
-          // tslint:disable-next-line:prefer-const
           let userobj = {
             username: this.username,
             name: this.name,
@@ -121,13 +120,11 @@ export class HomePage implements OnInit {
             password: this.password,
             confirmPassword: this.confirmpassword,
             points: 200
-            // vouchers: this.vouchers
           };
           this._authService.addReg(userobj).subscribe(
             data => {
-              // tslint:disable-next-line:no-string-literal
               console.log(data["_body"]);
-              // tslint:disable-next-line:quotemark
+
               this._router.navigate(["/login"]);
             },
             error => {

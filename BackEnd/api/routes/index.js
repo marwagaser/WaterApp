@@ -73,11 +73,11 @@ router.get(
   isAuthenticated,
   userCtrl.getCurrentPoints
 );
-router.get(
-  "/user/getVouchers",
-  isAuthenticated,
-  userCtrl.getVouchers
-);
+// router.get(
+//   "/user/getVouchers",
+//   isAuthenticated,
+//   userCtrl.getVouchers
+// );
 
 router.get(
   "/company/getCompany/:companyId",
@@ -94,7 +94,6 @@ router.get("/voucher/get", voucherCtrl.getVouchers);
 router.post("/voucher/post", voucherCtrl.postVoucher);
 router.delete("/voucher/delete/:_id", voucherCtrl.deleteVoucher);
 router.get("/voucher/get/:_id", voucherCtrl.findVoucher);
-
 
 /*productCtrl = require('../controllers/ProductController');
   
