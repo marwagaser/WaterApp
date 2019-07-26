@@ -64,6 +64,7 @@ module.exports.getUserByUsername = function(req, res, next) {
 };
 
 module.exports.getCurrentPoints = function(req, res, next) {
+  console.log("accessed get current points");
   if (!Validations.isString(req.decodedToken.user.username)) {
     return res.status(422).json({
       err: null,
@@ -82,8 +83,29 @@ module.exports.getCurrentPoints = function(req, res, next) {
     res.status(200).json({
       err: null,
       msg: "Current user points retrieved successfully.",
-      data: req.decodedToken.user.points,
-      name: req.decodedToken.user.name
+      data: user.points
+    });
+  });
+};
+
+module.exports.getVouchers = function(req, res, next) {
+  if (!Validations.isString(req.decodedToken.user.username)) {
+    return res.status(422).json({
+      err: null,
+      msg: "type parameter must be a valid String.",
+      data: null
+    });
+  }
+  User.find({ Voucher: req.decodedToken.user.vouchers }).exec(function(
+    err,
+    user
+  ) {
+    if (err) {
+      console.log("Error");
+      return next(err);
+    }
+    res.status(200).json({
+     // Working on this later
     });
   });
 };

@@ -45,6 +45,10 @@ var VoucherSchema = new mongoose.Schema({
         trim:true,
         default: "Blue is secondary"
       },
+      user:{
+       type: String,
+       default: "8987"
+      },
       createdAt: {
         type: Date,
         default: Date.now
