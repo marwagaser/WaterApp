@@ -47,6 +47,40 @@
 
   <form [formGroup]="updateForm" *ngIf="updateHidden">
     <ion-item>
+      <ion-label position="floating">Username</ion-label>
+      <ion-input
+        type="text"
+        inputmode="text"
+        formControlName="username"
+        [(ngModel)]="username"
+      ></ion-input>
+    </ion-item>
+
+    <ion-text
+      color="danger"
+      *ngIf="
+        updateForm.get('username').errors?.pattern &&
+        updateForm.get('username').touched
+      "
+    >
+      Your username can contian alphabets, _, and numbers only.
+    </ion-text>
+
+    <ion-text
+      color="danger"
+      *ngIf="
+        updateForm.get('username').errors?.minlength &&
+        updateForm.get('username').touched &&
+        !updateForm.get('username').errors?.pattern
+      "
+    >
+      Your username is too short.
+    </ion-text>
+
+    <br />
+
+    <!-- end of username -->
+    <ion-item>
       <ion-label position="floating">Name</ion-label>
       <ion-input
         type="text"
@@ -78,63 +112,6 @@
     <br />
 
     <!-- end of name -->
-    <ion-item>
-      <ion-label position="floating">Region</ion-label>
-      <ion-input
-        type="text"
-        formControlName="region"
-        [(ngModel)]="region"
-      ></ion-input>
-    </ion-item>
-
-    <ion-text
-      color="danger"
-      *ngIf="
-        updateForm.get('region').errors?.pattern &&
-        updateForm.get('region').touched
-      "
-    >
-      Your region should be alphanumeric.
-    </ion-text>
-
-    <ion-text
-      color="danger"
-      *ngIf="
-        updateForm.get('region').errors?.minlength &&
-        updateForm.get('region').touched &&
-        !updateForm.get('region').errors?.pattern
-      "
-    >
-      Your region is too short.
-    </ion-text>
-
-    <br />
-
-    <!-- end of region -->
-    <ion-item>
-      <ion-label position="floating">Building Number</ion-label>
-      <ion-input
-        type="number"
-        formControlName="buildingNumber"
-        [(ngModel)]="building"
-      ></ion-input>
-    </ion-item>
-
-    <ion-text
-      color="danger"
-      *ngIf="
-        (updateForm.get('buildingNumber').errors?.max &&
-          updateForm.get('buildingNumber').touched) ||
-        (updateForm.get('buildingNumber').errors?.min &&
-          updateForm.get('buildingNumber').touched)
-      "
-    >
-      Your building number should be between 1 and 999.
-    </ion-text>
-
-    <br />
-
-    <!-- end of building number -->
 
     <ion-item>
       <ion-label position="floating">Password</ion-label>
@@ -178,8 +155,8 @@
     <ion-text
       color="danger"
       *ngIf="
-        updateForm.get('confirmpassword').errors?.MatchPassword &&
-        updateForm.get('confirmpassword').touched
+        updateForm.get('confirmpassword').value !=
+        updateForm.get('password').value
       "
     >
       Password and confirm password do not match.</ion-text

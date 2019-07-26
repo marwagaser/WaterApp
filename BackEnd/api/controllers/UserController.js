@@ -75,6 +75,7 @@ module.exports.getCurrentPoints = function(req, res, next) {
     err,
     user
   ) {
+    console.log(req.params.username);
     if (err) {
       console.log("hi");
       return next(err);

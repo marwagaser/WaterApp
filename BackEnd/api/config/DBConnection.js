@@ -1,5 +1,5 @@
-const mongoose = require('mongoose'),
-  config = require('../config/Config'),
+const mongoose = require("mongoose"),
+  config = require("../config/Config"),
   dburl = config.MONGO_URI;
 
 // CAPTURE APP TERMINATION / RESTART EVENTS
@@ -18,11 +18,11 @@ const gracefulShutdown = () => {
 };
 
 // For nodemon restarts
-process.once('SIGUSR2', () => {
+process.once("SIGUSR2", () => {
   gracefulShutdown()
     .then(() => {
-      console.log('nodemon restart');
-      process.kill(process.pid, 'SIGUSR2');
+      console.log("nodemon restart");
+      process.kill(process.pid, "SIGUSR2");
     })
     .catch(err => {
       console.error(err);
@@ -30,10 +30,10 @@ process.once('SIGUSR2', () => {
 });
 
 // For app termination
-process.on('SIGINT', () => {
+process.on("SIGINT", () => {
   gracefulShutdown()
     .then(() => {
-      console.log('App termination (SIGINT)');
+      console.log("App termination (SIGINT)");
       process.exit(0);
     })
     .catch(err => {
@@ -42,10 +42,10 @@ process.on('SIGINT', () => {
 });
 
 // For Heroku app termination
-process.on('SIGTERM', () => {
+process.on("SIGTERM", () => {
   gracefulShutdown()
     .then(() => {
-      console.log('App termination (SIGTERM)');
+      console.log("App termination (SIGTERM)");
       process.exit(0);
     })
     .catch(err => {
@@ -55,9 +55,9 @@ process.on('SIGTERM', () => {
 
 mongoose.Promise = Promise;
 mongoose
-  .connect(dburl) //,{useNewUrlParser : true}
+  .connect(dburl,{useNewUrlParser : true}) //,{useNewUrlParser : true}
   .then(() => {
-    console.log('Successfully connected to the database');
+    console.log("Successfully connected to the database");
   })
   .catch(err => {
     console.error(err);
@@ -70,9 +70,9 @@ mongoose
       });
   });
 
-require('../models/User');
-require('../models/Point');
-require('../models/Region');
-require('../models/Sponsor');
-require('../models/Voucher');
-require('../models/WaterMeter');
+require("../models/User");
+require("../models/Point");
+require("../models/Region");
+require("../models/Sponsor");
+require("../models/Voucher");
+require("../models/WaterMeter");

@@ -4,6 +4,7 @@ import { Validators, FormBuilder } from "@angular/forms";
 import { PasswordValidation } from "../passwordValidation";
 import { AlertController } from "@ionic/angular";
 import { AuthService } from "../../auth.service";
+import { Voucher } from "../../objects/Voucher";
 @Component({
   selector: "app-home",
   templateUrl: "./home.page.html",
@@ -19,6 +20,7 @@ export class HomePage implements OnInit {
   password = "";
   confirmpassword = "";
   points = 120;
+  vouchers: Voucher[] = [];
   signupForm = this.formB.group(
     {
       username: [
@@ -122,7 +124,8 @@ export class HomePage implements OnInit {
             building: this.building,
             password: this.password,
             confirmPassword: this.confirmpassword,
-            points: this.points
+            points: 200
+          //  vouchers: this.vouchers
           };
           this._authService.addReg(userobj).subscribe(
             data => {

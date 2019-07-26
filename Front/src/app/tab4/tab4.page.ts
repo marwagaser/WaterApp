@@ -4,6 +4,8 @@ import { Router } from "@angular/router";
 import { Validators, FormBuilder } from "@angular/forms";
 import { PasswordValidation } from "../pages/passwordValidation";
 import { AuthService } from "../auth.service";
+import { AlertController } from "@ionic/angular";
+import { UserService } from "../services/user.service";
 @Component({
   selector: "app-tab4",
   templateUrl: "tab4.page.html",
@@ -13,12 +15,10 @@ import { AuthService } from "../auth.service";
 export class Tab4Page implements OnInit {
   updateHidden = false;
   clientName = ""; //the name of the user should be passed to me;
-  // current: number = //the one which i should get from the service;
-  name = null;
-  region = null;
-  building = null;
-  password = null;
-  confirmpassword = null;
+  username = "";
+  name = "";
+  password = "";
+  confirmpassword = "";
   current: number = 0;
   max: number = 2000;
   stroke: number = 15;
@@ -35,28 +35,22 @@ export class Tab4Page implements OnInit {
   animations: string[] = [];
   gradient: boolean = false;
   realCurrent: number = 0;
-  updateForm = this.formB.group(
-    {
-      name: ["", [Validators.pattern("^[a-zA-Z]*$"), Validators.minLength(3)]],
-      region: [
-        "",
-        [Validators.minLength(3), Validators.pattern("^[a-zA-Z0-9 ]*$")]
-      ],
-
-      buildingNumber: ["", [Validators.min(1), Validators.max(999)]],
-      password: [
-        "",
-        [Validators.minLength(8), Validators.pattern("^[^\\s]+$")]
-      ],
-      confirmpassword: ["", []]
-    },
-    { validator: PasswordValidation.MatchPassword }
-  );
+  updateForm = this.formB.group({
+    username: [
+      "",
+      [Validators.minLength(5), Validators.pattern("^[a-zA-Z0-9_]*$")]
+    ],
+    name: ["", [Validators.pattern("^[a-zA-Z]*$"), Validators.minLength(3)]],
+    password: ["", [Validators.minLength(8), Validators.pattern("^[^\\s]+$")]],
+    confirmpassword: ["", []]
+  });
   constructor(
     ease: RoundProgressEase,
     private _router: Router,
     private formB: FormBuilder,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _userService: UserService,
+    public alertController: AlertController
   ) {
     for (let prop in ease) {
       if (prop.toLowerCase().indexOf("ease") > -1) {
@@ -64,14 +58,11 @@ export class Tab4Page implements OnInit {
       }
     }
     this._authService.getPoints().subscribe((res: any) => {
-      // res.toString();
       this.current = res.data;
       this.clientName = res.name;
     });
   }
-  ngOnInit() {
-    //this._authService.getPoints().subscribe((res: any) => {});
-  }
+  ngOnInit() {}
   getOverlayStyle() {
     let isSemi = this.semicircle;
     let transform = (isSemi ? "" : "translateY(-50%) ") + "translateX(-50%)";
@@ -87,7 +78,6 @@ export class Tab4Page implements OnInit {
     };
   }
   logoutUser() {
-    // do back end validation and call logout method
     this._authService.logout();
 
     this._router.navigate(["/login"]);
@@ -95,31 +85,40 @@ export class Tab4Page implements OnInit {
   toggle() {
     this.updateHidden = !this.updateHidden;
   }
-  updateInfo() {
-    console.log("updatinginfo");
+  async invalidUpdate() {
+    const alert = await this.alertController.create({
+      header: "Invalid update",
+      message: "Please correct invalid fields",
+      buttons: ["OK"]
+    });
 
+    await alert.present();
+  }
+  updateInfo() {
     if (!this.updateForm.valid) {
-      console.log("not valid");
+      this.invalidUpdate();
     } else {
-      if (this.region != null)
-        if (this.region.trim() === "") {
-          this.region = null;
-        }
+      if (!(this.username === "")) {
+        //send request to update username
+      }
+      if (!(this.name === "")) {
+        //send request to update name
+      }
+      if (!(this.password === "")) {
+        //send request to update password
+      }
       var updatedUser = {
+        username: this.username,
         name: this.name,
-        region: this.region,
-        building: this.building,
         password: this.password,
         confirmPassword: this.confirmpassword
       };
-      //send updated data here!
       console.log(updatedUser);
-      //////////////
-      this.name = null;
-      this.region = null;
-      this.building = null;
-      this.password = null;
-      this.confirmpassword = null;
+
+      this.username = "";
+      this.name = "";
+      this.password = "";
+      this.confirmpassword = "";
     }
   }
 }
