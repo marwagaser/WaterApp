@@ -119,7 +119,7 @@ export class HomePage implements OnInit {
             building: this.building,
             password: this.password,
             confirmPassword: this.confirmpassword,
-            points: 200
+            points: 300
           };
           this._authService.addReg(userobj).subscribe(
             data => {

@@ -12,7 +12,7 @@ import { AuthService } from "../auth.service";
 export class UserService {
   constructor(private _authService: AuthService, private http: Http) {}
 
-  updateUserInfo(updatedUser) {
+  updateUsername(username) {
     var headers = new Headers();
     headers.append(
       "Authorization",
@@ -20,7 +20,33 @@ export class UserService {
     );
     headers.append("Content-Type", "application/json");
     return this.http
-      .post(environment.apiUrl + "/user/getCurrentPoints", updatedUser, {
+      .post(environment.apiUrl + "/user/updateUsername", username, {
+        headers
+      })
+      .map(res => res.json());
+  }
+  updateName(name) {
+    var headers = new Headers();
+    headers.append(
+      "Authorization",
+      "Bearer " + this._authService.getAuthorizationToken()
+    );
+    headers.append("Content-Type", "application/json");
+    return this.http
+      .post(environment.apiUrl + "/user/updateName", name, {
+        headers
+      })
+      .map(res => res.json());
+  }
+  updatePassword(newpass) {
+    var headers = new Headers();
+    headers.append(
+      "Authorization",
+      "Bearer " + this._authService.getAuthorizationToken()
+    );
+    headers.append("Content-Type", "application/json");
+    return this.http
+      .post(environment.apiUrl + "/user/updatePassword", newpass, {
         headers
       })
       .map(res => res.json());

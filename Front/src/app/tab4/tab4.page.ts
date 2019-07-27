@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation, OnInit } from "@angular/core";
+import { Component, ViewEncapsulation, OnInit, OnChanges } from "@angular/core";
 import { RoundProgressEase } from "angular-svg-round-progressbar";
 import { Router } from "@angular/router";
 import { Validators, FormBuilder } from "@angular/forms";
@@ -12,7 +12,7 @@ import { UserService } from "../services/user.service";
   styleUrls: ["tab4.page.scss"],
   encapsulation: ViewEncapsulation.None
 })
-export class Tab4Page implements OnInit {
+export class Tab4Page implements OnInit, OnChanges {
   updateHidden = false;
   clientName = ""; //the name of the user should be passed to me;
   username = "";
@@ -57,12 +57,19 @@ export class Tab4Page implements OnInit {
         this.animations.push(prop);
       }
     }
+  }
+  ngOnInit() {
     this._authService.getPoints().subscribe((res: any) => {
       this.current = res.data;
       this.clientName = res.name;
     });
   }
-  ngOnInit() {}
+  ngOnChanges() {
+    this._authService.getPoints().subscribe((res: any) => {
+      this.current = res.data;
+      this.clientName = res.name;
+    });
+  }
   getOverlayStyle() {
     let isSemi = this.semicircle;
     let transform = (isSemi ? "" : "translateY(-50%) ") + "translateX(-50%)";
@@ -94,18 +101,58 @@ export class Tab4Page implements OnInit {
 
     await alert.present();
   }
+  async updateFail() {
+    const alert = await this.alertController.create({
+      header: "Invalid update",
+      message: "Update failed",
+      buttons: ["OK"]
+    });
+
+    await alert.present();
+  }
   updateInfo() {
     if (!this.updateForm.valid) {
       this.invalidUpdate();
     } else {
       if (!(this.username === "")) {
-        //send request to update username
+        var usernameObj = {
+          username: this.username
+        };
+        this._userService.updateUsername(usernameObj).subscribe(
+          data => {
+            console.log(data);
+          },
+          error => {
+            this.updateFail();
+          }
+        );
       }
       if (!(this.name === "")) {
-        //send request to update name
+        var nameObj = {
+          name: this.name
+        };
+        this._userService.updateUsername(nameObj).subscribe(
+          data => {
+            console.log(data);
+          },
+          error => {
+            this.updateFail();
+          }
+        );
       }
+      this._authService.getPoints().subscribe((res: any) => {
+        //this.current = res.data;
+        this.clientName = res.name;
+      });
       if (!(this.password === "")) {
-        //send request to update password
+        // var passObj = {
+        //   newPassword: this.password,
+        //   confirmPassword: this.confirmpassword
+        // };
+        // this._userService.updatePassword(passObj).subscribe((res: any) => {
+        //   console.log(res.data);
+        // });
+        // //send request to update password
       }
       var updatedUser = {
         username: this.username,

@@ -144,7 +144,57 @@ module.exports.updateUser = function(req, res, next) {
 //});
 //});
 //};
+module.exports.updateUsername = function(req, res, next) {
+  var username = req.decodedToken.user.username;
+  User.findByIdAndUpdate(
+    req.decodedToken.user._id,
+    {
+      $set: req.body
+    },
+    { new: true }
+  ).exec(function(err, updatedUser) {
+    if (err) {
+      return next(err);
+    }
+    if (!updatedUser) {
+      return res
+        .status(404)
+        .json({ err: null, msg: "User not found.", data: null });
+    }
 
+    res.status(200).json({
+      err: null,
+      msg: "User was updated successfully.",
+      data: username
+    });
+  });
+};
+
+module.exports.updateName = function(req, res, next) {
+  var name = req.decodedToken.user.name;
+  User.findByIdAndUpdate(
+    req.decodedToken.user._id,
+    {
+      $set: req.body
+    },
+    { new: true }
+  ).exec(function(err, updatedUser) {
+    if (err) {
+      return next(err);
+    }
+    if (!updatedUser) {
+      return res
+        .status(404)
+        .json({ err: null, msg: "User not found.", data: null });
+    }
+
+    res.status(200).json({
+      err: null,
+      msg: "User was updated successfully.",
+      data: req.decodedToken.user.name
+    });
+  });
+};
 module.exports.updateUserPassword = function(req, res, next) {
   if (!Validations.isObjectId(req.decodedToken.user._id)) {
     return res.status(422).json({

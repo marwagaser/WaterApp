@@ -73,6 +73,9 @@ router.get(
   isAuthenticated,
   userCtrl.getCurrentPoints
 );
+router.post("/user/updateUsername", isAuthenticated, userCtrl.updateUsername);
+router.post("/user/updateName", isAuthenticated, userCtrl.updateName);
+
 // router.get(
 //   "/user/getVouchers",
 //   isAuthenticated,
