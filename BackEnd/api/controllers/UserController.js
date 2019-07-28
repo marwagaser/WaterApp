@@ -338,7 +338,9 @@ module.exports.postUserVoucher= async(req, res)=> {
  
 
   const v = await Voucher.findOne({_id:req.body.voucherID}).exec();
+  console.log("Before");
   console.log(v);
+  console.log("After");
   if(!v){
     return res
         .status(404)

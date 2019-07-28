@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { NavController, AlertController, ToastController } from '@ionic/angular';
 import { VoucherService } from '../services/voucher-service';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-tab3',
@@ -11,7 +12,8 @@ import { VoucherService } from '../services/voucher-service';
 export class Tab3Page {
   vouchers: Observable<any>;
   constructor(public navCtrl: NavController, public voucherService: VoucherService,
-              public alertCtrl: AlertController, public toastCtrl: ToastController) {
+              public alertCtrl: AlertController, public toastCtrl: ToastController,
+              public authService: AuthService) {
      this.loadVouchers();
    }
    loadVouchers() {
@@ -77,6 +79,13 @@ export class Tab3Page {
        this.showToast(data.msg);
        this.loadVouchers();
      });
+   }
+
+   postUserVoucher(id) {
+    this.authService.postUserVoucher(id).subscribe(data => {
+      this.showToast(data.msg);
+      this.loadVouchers();
+    });
    }
    private async showToast(message: string) {
      const toast = await this.toastCtrl.create({

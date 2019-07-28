@@ -66,6 +66,18 @@ export class AuthService {
       .map(res => res.json());
   }
 
+  postUserVoucher(voucherID) {
+    var headers = new Headers();
+    headers.append("Authorization", "Bearer " + this.getAuthorizationToken());
+    headers.append("Content-Type", "application/json");
+    return this.http
+      .post(environment.apiUrl + "/user/postUserVoucher", voucherID,
+      {
+        headers
+      })
+      .map(res => res.json());
+  }
+
   updateInfo(UserOb) {
     // var headers = new Headers();
     // headers.append("content-type", "application/json");
@@ -78,4 +90,6 @@ export class AuthService {
     console.log("userob", UserOb);
     return this.http.post(environment.apiUrl + "/auth/register", UserOb);
   }
+
+  
 }
