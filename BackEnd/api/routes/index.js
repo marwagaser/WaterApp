@@ -80,6 +80,11 @@ router.post(
   isAuthenticated,
   userCtrl.updateUserPassword
 );
+router.post(
+  "/user/postUserVoucher/",
+  isAuthenticated,
+  userCtrl.postUserVoucher
+);
 // router.get(
 //   "/user/getVouchers",
 //   isAuthenticated,

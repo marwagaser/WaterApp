@@ -333,3 +333,30 @@ module.exports.updateUserPassword = function(req, res, next) {
     });*/
 // });
 //};
+
+module.exports.postUserVoucher= async(req, res)=> {
+ 
+
+  const v = await Voucher.findOne({_id:req.body.voucherID}).exec();
+  console.log(v);
+  if(!v){
+    return res
+        .status(404)
+        .json({ err: null, msg: 'Voucher not found.', data: null });
+  }
+  console.log("foundVOucher");
+  User.findByIdAndUpdate( req.decodedToken.user._id,
+     { $push : {
+    vouchers: v}},
+     function ( err ) {
+        if(err){
+                console.log(err);
+        }else{
+          res.status(200).json({
+            err: null,
+            msg: 'Voucher added ',
+            data: v
+          });
+        }
+  })
+  };
