@@ -92,6 +92,16 @@ export class Tab4Page implements OnInit, OnChanges {
   toggle() {
     this.updateHidden = !this.updateHidden;
   }
+  async confirmUpdate() {
+    const alert = await this.alertController.create({
+      header: "Update complete",
+      message: "Update successful.",
+      buttons: [{ text: "OK", cssClass: "success" }]
+    });
+
+    await alert.present();
+  }
+
   async invalidUpdate() {
     const alert = await this.alertController.create({
       header: "Invalid update",
@@ -167,12 +177,7 @@ export class Tab4Page implements OnInit, OnChanges {
         );
         //send request to update password
       }
-      var updatedUser = {
-        username: this.username,
-        name: this.name,
-        password: this.password,
-        confirmPassword: this.confirmpassword
-      };
+      this.confirmUpdate();
 
       this.username = "";
       this.name = "";
