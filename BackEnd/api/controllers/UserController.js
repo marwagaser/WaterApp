@@ -64,7 +64,7 @@ module.exports.getUserByUsername = function(req, res, next) {
 };
 
 module.exports.getCurrentPoints = function(req, res, next) {
-  if (!Validations.isObjectId(req.decodedToken.user.id)) {
+  if (!Validations.isObjectId(req.decodedToken.user._id)) {
     return res.status(422).json({
       err: null,
       msg: "type parameter must be a valid Object ID.",
@@ -199,7 +199,7 @@ module.exports.updateName = function(req, res, next) {
   });
 };
 module.exports.updateUserPassword = function(req, res, next) {
-  if (!Validations.isObjectId(req.decodedToken.user.id)) {
+  if (!Validations.isObjectId(req.decodedToken.user._id)) {
     console.log("not validated");
     return res.status(422).json({
       err: null,
@@ -241,7 +241,7 @@ console.log("valid");
   }
 
   User.findByIdAndUpdate(
-    req.decodedToken.user.id,
+    req.decodedToken.user._id,
     {
       $set: req.body
     },
