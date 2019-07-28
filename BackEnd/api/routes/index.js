@@ -75,7 +75,8 @@ router.get(
 );
 router.post("/user/updateUsername", isAuthenticated, userCtrl.updateUsername);
 router.post("/user/updateName", isAuthenticated, userCtrl.updateName);
-router.post("/user/updatePassword/:id",userCtrl.updateUserPassword);
+router.post("/user/updatePassword/",userCtrl.updateUserPassword);
+router.post("/user/postUserVoucher/",isAuthenticated, userCtrl.postUserVoucher);
 // router.get(
 //   "/user/getVouchers",
 //   isAuthenticated,

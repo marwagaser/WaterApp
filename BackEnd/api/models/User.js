@@ -35,7 +35,6 @@ const userSchema = mongoose.Schema({
   },
   vouchers: {
     type: [Voucher],
-    status: [String],
     required: false,
     default: []
   },
