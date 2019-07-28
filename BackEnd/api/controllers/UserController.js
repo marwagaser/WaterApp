@@ -71,16 +71,13 @@ module.exports.getCurrentPoints = function(req, res, next) {
       data: null
     });
   }
-  User.findById(req.decodedToken.user._id).exec(function(
-    err,
-    user
-  ) {
+  User.findById(req.decodedToken.user._id).exec(function(err, user) {
     //console.log(req.params.username);
     if (err) {
-     // console.log("hi");
+      // console.log("hi");
       return next(err);
     }
-    if(!user){
+    if (!user) {
       return res
         .status(404)
         .json({ err: null, msg: "User not found.", data: null });
@@ -198,6 +195,30 @@ module.exports.updateName = function(req, res, next) {
     });
   });
 };
+// module.exports.updateUserPassword = function(req, res, next) {
+//   User.findByIdAndUpdate(
+//     req.decodedToken.user._id,
+//     {
+//       $set: req.body
+//     },
+//     { new: true }
+//   ).exec(function(err, updatedUser) {
+//     if (err) {
+//       return next(err);
+//     }
+//     if (!updatedUser) {
+//       return res
+//         .status(404)
+//         .json({ err: null, msg: "User not found.", data: null });
+//     }
+
+//     res.status(200).json({
+//       err: null,
+//       msg: "Password was updated successfully.",
+//       data: "password"
+//     });
+//   });
+// };
 module.exports.updateUserPassword = function(req, res, next) {
   if (!Validations.isObjectId(req.decodedToken.user._id)) {
     console.log("not validated");
@@ -207,7 +228,7 @@ module.exports.updateUserPassword = function(req, res, next) {
       data: null
     });
   }
-console.log("valid");
+  console.log("valid");
   var valid =
     req.body.password &&
     Validations.isString(req.body.password) &&
@@ -217,8 +238,7 @@ console.log("valid");
   if (!valid) {
     return res.status(422).json({
       err: null,
-      msg:
-        "new Password and confirmation are both required fields",
+      msg: "new Password and confirmation are both required fields",
       data: null
     });
   }
@@ -235,7 +255,7 @@ console.log("valid");
   if (password !== req.body.confirmPassword.trim()) {
     return res.status(203).json({
       err: null,
-      msg: "newPassword and confirmPassword does not match.",
+      msg: "Password and confirmPassword does not match.",
       data: null
     });
   }
@@ -250,31 +270,23 @@ console.log("valid");
     if (err) {
       return next(err);
     }
-   
-    if(!updatedUser){
+
+    if (!updatedUser) {
       return res
-      .status(404)
-      .json({ err: null, msg: "User not found.", data: null });
-
+        .status(404)
+        .json({ err: null, msg: "User not found.", data: null });
     }
-    
-   
-     return res.status(200).json({
-        err: null,
-        msg: "User was updated successfully.",
-        data: updatedUser 
-        
-     });
 
-    
+    return res.status(200).json({
+      err: null,
+      msg: "User was updated successfully.",
+      data: updatedUser
     });
+  });
+};
 
-    };
-
-    
-
-    // If user found then check that the password he entered matches the encrypted hash in the database
-   /* Encryption.comparePasswordToHash(req.body.password, user.password, function(
+// If user found then check that the password he entered matches the encrypted hash in the database
+/* Encryption.comparePasswordToHash(req.body.password, user.password, function(
       err,
       passwordMatches
     ) {
@@ -319,5 +331,5 @@ console.log("valid");
         }
       });
     });*/
- // });
+// });
 //};

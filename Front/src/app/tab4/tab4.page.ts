@@ -22,7 +22,7 @@ export class Tab4Page implements OnInit, OnChanges {
   current: number = 0;
   max: number = 2000;
   stroke: number = 15;
-  radius: number = 140;
+  radius: number = 145;
   semicircle: boolean = false;
   rounded: boolean = false;
   responsive: boolean = false;
@@ -111,7 +111,13 @@ export class Tab4Page implements OnInit, OnChanges {
     await alert.present();
   }
   updateInfo() {
-    if (!this.updateForm.valid) {
+    if (
+      !this.updateForm.valid ||
+      !(
+        this.updateForm.get("password").value ===
+        this.updateForm.get("confirmpassword").value
+      )
+    ) {
       this.invalidUpdate();
     } else {
       if (!(this.username === "")) {
@@ -134,6 +140,7 @@ export class Tab4Page implements OnInit, OnChanges {
         this._userService.updateName(nameObj).subscribe(
           data => {
             console.log(data);
+            this.ngOnInit();
           },
           error => {
             this.updateFail();
@@ -141,18 +148,24 @@ export class Tab4Page implements OnInit, OnChanges {
         );
       }
       this._authService.getPoints().subscribe((res: any) => {
-        //this.current = res.data;
+        this.current = res.data;
         this.clientName = res.name;
       });
       if (!(this.password === "")) {
-        // var passObj = {
-        //   newPassword: this.password,
-        //   confirmPassword: this.confirmpassword
-        // };
-        // this._userService.updatePassword(passObj).subscribe((res: any) => {
-        //   console.log(res.data);
-        // });
-        // //send request to update password
+        var passObj = {
+          password: this.password,
+          confirmPassword: this.confirmpassword
+        };
+        this._userService.updatePassword(passObj).subscribe(
+          data => {
+            console.log("worked");
+            //console.log(JSON.stringify(data));
+          },
+          error => {
+            this.updateFail();
+          }
+        );
+        //send request to update password
       }
       var updatedUser = {
         username: this.username,
@@ -160,7 +173,6 @@ export class Tab4Page implements OnInit, OnChanges {
         password: this.password,
         confirmPassword: this.confirmpassword
       };
-      console.log(updatedUser);
 
       this.username = "";
       this.name = "";

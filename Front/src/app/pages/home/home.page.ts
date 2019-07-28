@@ -106,7 +106,6 @@ export class HomePage implements OnInit {
   register() {
     if (!this.signupForm.valid) {
       this.presentAlert();
-      // this.formNotValid = "There are some incorrect fields.";
     } else {
       if (this.region != null) {
         if (this.region.trim() === "") {
@@ -119,7 +118,7 @@ export class HomePage implements OnInit {
             building: this.building,
             password: this.password,
             confirmPassword: this.confirmpassword,
-            points: 300
+            points: 0
           };
           this._authService.addReg(userobj).subscribe(
             data => {
