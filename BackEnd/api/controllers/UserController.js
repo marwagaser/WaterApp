@@ -141,9 +141,7 @@ module.exports.updateUser = function(req, res, next) {
     });
   });
 };
-//});
-//});
-//};
+
 module.exports.updateUsername = function(req, res, next) {
   var username = req.decodedToken.user.username;
   User.findByIdAndUpdate(
@@ -196,21 +194,18 @@ module.exports.updateName = function(req, res, next) {
   });
 };
 module.exports.updateUserPassword = function(req, res, next) {
-  if (!Validations.isObjectId(req.decodedToken.user._id)) {
+  if (!Validations.isObjectId(req.decodedToken.user.id)) {
+    console.log("not validated");
     return res.status(422).json({
       err: null,
       msg: "User not found",
       data: null
     });
   }
-
+console.log("valid");
   var valid =
-    req.body.email &&
-    Validations.isString(req.body.email) &&
     req.body.password &&
     Validations.isString(req.body.password) &&
-    req.body.newPassword &&
-    Validations.isString(req.body.newPassword) &&
     req.body.confirmPassword &&
     Validations.isString(req.body.confirmPassword);
 
@@ -218,11 +213,12 @@ module.exports.updateUserPassword = function(req, res, next) {
     return res.status(422).json({
       err: null,
       msg:
-        "email(String and of valid email format), password(String) , confirmPassword(String) and newPassword(String) are required fields.",
+        "new Password and confirmation are both required fields",
       data: null
     });
   }
-  var password = req.body.newPassword.trim();
+  console.log("request body ok");
+  var password = req.body.password.trim();
   if (password.length < 8) {
     return res.status(203).json({
       err: null,
@@ -238,21 +234,42 @@ module.exports.updateUserPassword = function(req, res, next) {
       data: null
     });
   }
-  User.findOne({
-    email: req.body.email.trim().toLowerCase()
-  }).exec(function(err, user) {
+
+  User.findByIdAndUpdate(
+    req.decodedToken.user.id,
+    {
+      $set: req.body
+    },
+    { new: true }
+  ).exec(function(err, updatedUser) {
     if (err) {
       return next(err);
     }
-    // If user not found then he/she is not registered
-    if (!user) {
+   
+    if(!updatedUser){
       return res
-        .status(203)
-        .json({ err: null, msg: "User not found.", data: null });
+      .status(404)
+      .json({ err: null, msg: "User not found.", data: null });
+
     }
+    
+   
+     return res.status(200).json({
+        err: null,
+        msg: "User was updated successfully.",
+        data: updatedUser 
+        
+     });
+
+    
+    });
+
+    };
+
+    
 
     // If user found then check that the password he entered matches the encrypted hash in the database
-    Encryption.comparePasswordToHash(req.body.password, user.password, function(
+   /* Encryption.comparePasswordToHash(req.body.password, user.password, function(
       err,
       passwordMatches
     ) {
@@ -296,6 +313,6 @@ module.exports.updateUserPassword = function(req, res, next) {
           });
         }
       });
-    });
-  });
-};
+    });*/
+ // });
+//};
