@@ -64,36 +64,41 @@ module.exports.getUserByUsername = function(req, res, next) {
 };
 
 module.exports.getCurrentPoints = function(req, res, next) {
-  if (!Validations.isString(req.decodedToken.user.username)) {
+  if (!Validations.isObjectId(req.decodedToken.user.id)) {
     return res.status(422).json({
       err: null,
-      msg: "type parameter must be a valid String.",
+      msg: "type parameter must be a valid Object ID.",
       data: null
     });
   }
-  User.find({ username: req.decodedToken.user.username }).exec(function(
+  User.findById(req.decodedToken.user._id).exec(function(
     err,
     user
   ) {
-    console.log(req.params.username);
+    //console.log(req.params.username);
     if (err) {
-      console.log("hi");
+     // console.log("hi");
       return next(err);
+    }
+    if(!user){
+      return res
+        .status(404)
+        .json({ err: null, msg: "User not found.", data: null });
     }
     res.status(200).json({
       err: null,
       msg: "Current user points retrieved successfully.",
-      data: req.decodedToken.user.points,
-      name: req.decodedToken.user.name
+      data: user.points,
+      name: user.name
     });
   });
 };
 
 module.exports.getVouchers = function(req, res, next) {
-  if (!Validations.isString(req.decodedToken.user.username)) {
+  if (!Validations.isObjectId(req.decodedToken.user._id)) {
     return res.status(422).json({
       err: null,
-      msg: "type parameter must be a valid String.",
+      msg: "type parameter must be a valid ObjectID.",
       data: null
     });
   }
