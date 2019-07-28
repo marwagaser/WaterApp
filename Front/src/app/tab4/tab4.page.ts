@@ -131,7 +131,7 @@ export class Tab4Page implements OnInit, OnChanges {
         var nameObj = {
           name: this.name
         };
-        this._userService.updateUsername(nameObj).subscribe(
+        this._userService.updateName(nameObj).subscribe(
           data => {
             console.log(data);
           },
