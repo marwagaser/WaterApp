@@ -3,7 +3,135 @@
     <ion-title>Add Reading</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-  Marwa's content here
+  <br />
+  {{date | date: 'dd/MM/yyyy'}}
+  <br />
+  <form [formGroup]="readingForm">
+    <ion-item>
+      <ion-label position="floating">Water meter ID</ion-label>
+      <ion-input
+        type="text"
+        formControlName="WMID"
+        [(ngModel)]="WMID"
+      ></ion-input>
+    </ion-item>
+    <ion-text
+      color="danger"
+      *ngIf="
+        readingForm.get('WMID').errors?.required &&
+        readingForm.get('WMID').touched
+      "
+    >
+      Water meter ID required
+    </ion-text>
+    <ion-text
+      color="danger"
+      *ngIf="
+        !readingForm.get('WMID').errors?.required &&
+        readingForm.get('WMID').touched &&
+        readingForm.get('WMID').errors?.pattern
+      "
+    >
+      ID must contain letters and numbers only
+    </ion-text>
+    <!-- end of WMID -->
+    <br />
+    <ion-item>
+      <ion-label position="floating">Building</ion-label>
+      <ion-input
+        type="number"
+        formControlName="buildingNumber"
+        [(ngModel)]="building" onkeydown="javascript: return event.keyCode === 8 || event.keyCode === 46 ? true : !isNaN(Number(event.key))"
+      ></ion-input>
+    </ion-item>
+    <ion-text
+      color="danger"
+      *ngIf="
+        readingForm.get('buildingNumber').errors?.required &&
+        readingForm.get('buildingNumber').touched
+      "
+    >
+      Building number is required
+    </ion-text>
+    <ion-text
+      color="danger"
+      *ngIf="
+        (readingForm.get('buildingNumber').errors?.max &&
+          readingForm.get('buildingNumber').touched) ||
+        (readingForm.get('buildingNumber').errors?.min &&
+          readingForm.get('buildingNumber').touched)
+      "
+    >
+      The building number should be between 1 and 999
+    </ion-text>
+    <!-- end of building -->
+    <br />
+    <ion-item>
+      <ion-label position="floating">Region</ion-label>
+      <ion-input
+        type="text"
+        formControlName="region"
+        [(ngModel)]="region"
+      ></ion-input>
+    </ion-item>
+    <ion-text
+      color="danger"
+      *ngIf="
+        readingForm.get('region').errors?.required &&
+        readingForm.get('region').touched
+      "
+    >
+      Region is required
+    </ion-text>
+
+        <ion-text
+          color="danger"
+          *ngIf="
+            readingForm.get('region').errors?.pattern &&
+            readingForm.get('region').touched &&
+            !readingForm.get('region').errors?.required
+          "
+        >
+          Region should be alphanumeric.
+        </ion-text>
+
+        <ion-text
+          color="danger"
+          *ngIf="
+            readingForm.get('region').errors?.minlength &&
+            readingForm.get('region').touched &&
+            !readingForm.get('region').errors?.pattern &&
+            !readingForm.get('region').errors?.required
+          "
+        >
+          Region is too short.
+        </ion-text>
+<!-- end of region -->
+<br/>
+<ion-item>
+  <ion-label position="floating">Reading</ion-label>
+  <ion-input
+    type="number"
+    formControlName="reading"
+    [(ngModel)]="reading" onkeydown="javascript: return event.keyCode === 8 || event.keyCode === 46 ? true : !isNaN(Number(event.key))"
+  ></ion-input>
+</ion-item>
+<ion-text
+  color="danger"
+  *ngIf="
+    readingForm.get('reading').errors?.required &&
+    readingForm.get('reading').touched
+  "
+>
+  Reading is required
+</ion-text>
+
+    <br />
+    <br />
+    <br />
+
+    <ion-button expand="block" color="success" (click)="onReading()">Add Reading</ion-button>
+  </form>
+
 </ion-content>

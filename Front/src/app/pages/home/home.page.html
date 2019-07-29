@@ -144,6 +144,7 @@
       <ion-label position="floating">Building Number</ion-label>
       <ion-input
         type="number"
+        onkeydown="javascript: return event.keyCode === 8 || event.keyCode === 46 ? true : !isNaN(Number(event.key))"
         formControlName="buildingNumber"
         [(ngModel)]="building"
       ></ion-input>

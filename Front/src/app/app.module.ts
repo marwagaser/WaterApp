@@ -11,6 +11,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { HttpModule } from "@angular/http";
 import { AppSettings } from "./services/app-settings";
 import { VoucherService } from "./services/voucher-service";
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
