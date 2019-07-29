@@ -6,6 +6,8 @@ var mongoose = require("mongoose"),
   cloudinaryStorage = require("multer-storage-cloudinary"),
   path = require("path"),
   User = mongoose.model("User");
+  Voucher = mongoose.model("Voucher");
+
 var bodyParser = require("body-parser");
 const express = require("express");
 var app = express();
@@ -334,31 +336,33 @@ module.exports.updateUserPassword = function(req, res, next) {
 // });
 //};
 
-module.exports.postUserVoucher= async(req, res)=> {
- 
+module.exports.postUserVoucher= async function (req, res, next) {
 
-  const v = await Voucher.findOne({_id:req.body.voucherID}).exec();
-  console.log("Before");
-  console.log(v);
-  console.log("After");
-  if(!v){
-    return res
-        .status(404)
-        .json({ err: null, msg: 'Voucher not found.', data: null });
+  // res=res.header('Access-Control-Allow-Origin', '*');
+  // res=res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
+  //res=res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+
+    console.log(req.body.price);
+    
+    var newVoucher = {
+      companyID: req.body.companyID, 
+      voucherID: req.body.voucherID,
+      title: req.body.title,
+      offer: req.body.offer,
+      price: req.body.price,
+      promocode: req.body.promocode,
+      status: req.body.status
   }
-  console.log("foundVOucher");
-  User.findByIdAndUpdate( req.decodedToken.user._id,
+  
+  
+  User.findByIdAndUpdate({_id: req.decodedToken.user._id},
      { $push : {
-    vouchers: v}},
+    vouchers: req.body}},
      function ( err ) {
         if(err){
                 console.log(err);
         }else{
-          res.status(200).json({
-            err: null,
-            msg: 'Voucher added ',
-            data: v
-          });
+                console.log("Successfully added");
         }
   })
   };
