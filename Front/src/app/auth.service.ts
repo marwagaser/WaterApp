@@ -67,13 +67,14 @@ export class AuthService {
   }
 
   postUserVoucher(voucherID) {
+    
     var headers = new Headers();
     headers.append("Authorization", "Bearer " + this.getAuthorizationToken());
     headers.append("Content-Type", "application/json");
     return this.http
       .post(environment.apiUrl + "/user/postUserVoucher", voucherID,
       {
-        headers
+       // headers
       })
       .map(res => res.json());
   }

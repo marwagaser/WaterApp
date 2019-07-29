@@ -6,6 +6,7 @@ var mongoose = require("mongoose"),
   cloudinaryStorage = require("multer-storage-cloudinary"),
   path = require("path"),
   User = mongoose.model("User");
+  Voucher = mongoose.model("Voucher");
 var bodyParser = require("body-parser");
 const express = require("express");
 var app = express();
@@ -335,7 +336,14 @@ module.exports.updateUserPassword = function(req, res, next) {
 //};
 
 module.exports.postUserVoucher= async(req, res)=> {
- 
+  if (!Validations.isObjectId(req.body.voucherID)) {
+    console.log("not validated");
+    return res.status(422).json({
+      err: null,
+      msg: "Not a voucher ID",
+      data: null
+    });
+  }
 
   const v = await Voucher.findOne({_id:req.body.voucherID}).exec();
   console.log("Before");
