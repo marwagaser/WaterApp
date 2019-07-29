@@ -72,9 +72,8 @@ export class AuthService {
     headers.append("Authorization", "Bearer " + this.getAuthorizationToken());
     headers.append("Content-Type", "application/json");
     return this.http
-      .post(environment.apiUrl + "/user/postUserVoucher", voucherID,
-      {
-       // headers
+      .post(environment.apiUrl + "/user/postUserVoucher", voucherID, {
+        headers
       })
       .map(res => res.json());
   }
@@ -91,6 +90,4 @@ export class AuthService {
     console.log("userob", UserOb);
     return this.http.post(environment.apiUrl + "/auth/register", UserOb);
   }
-
-  
 }

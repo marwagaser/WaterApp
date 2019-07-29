@@ -6,14 +6,13 @@
       {{ voucher.offer }}
     </ion-item>
     <ion-item-options side="end">
-      <button ion-button color="danger" (click)="removeVoucher(voucher._id)">
+      <button ion-button color="danger" (click)="removeVoucher(voucher)">
       <ion-icon name="trash"></ion-icon>
       Delete
     </button>
     </ion-item-options>
-    <button (click)="postUserVoucher(voucher._id)" ion-item>
-    
-      <ion-icon name="cart"  item-start></ion-icon>
+    <button (click)="postUserVoucher(voucher)" ion-item>
+      <ion-icon name="cart" item-start></ion-icon>
       Buy this Voucher
     </button>
   </ion-item-sliding>

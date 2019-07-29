@@ -81,11 +81,8 @@ export class Tab3Page {
      });
    }
 
-   postUserVoucher(id)
-
-    { 
-       console.log("voucherID",id);
-    this.authService.postUserVoucher(id).subscribe(data => {
+   postUserVoucher(voucher) {
+    this.authService.postUserVoucher(voucher).subscribe(data => {
       this.showToast(data.msg);
       this.loadVouchers();
     });
