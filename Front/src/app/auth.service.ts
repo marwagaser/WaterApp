@@ -4,6 +4,7 @@ import { environment } from "../environments/environment";
 //import { map } from "rxjs/operators";
 import "rxjs/add/operator/map";
 import { AlertController } from "@ionic/angular";
+import { map } from '../../node_modules/rxjs/operators';
 
 @Injectable({
   providedIn: "root"
@@ -75,6 +76,18 @@ export class AuthService {
         headers
       })
       .map(res => res.json());
+  }
+
+  updateUserPoints(voucher) {
+    var headers = new Headers();
+    headers.append("Authorization", "Bearer " + this.getAuthorizationToken());
+    headers.append("Content-Type", "application/json");
+    return this.http
+    .post(environment.apiUrl + "/user/updateUserPoints", {price: voucher},
+      {
+        headers
+      })
+      .pipe(map(response => response.json()));
   }
 
   updateInfo(UserOb) {

@@ -84,6 +84,14 @@ export class Tab3Page {
    postUserVoucher(voucher) {
     this.authService.postUserVoucher(voucher).subscribe(data => {
       this.showToast(data.msg);
+      this.updateUserPoints(voucher.price);
+      this.loadVouchers();
+    });
+   }
+
+   updateUserPoints(voucher) {
+    this.authService.updateUserPoints(voucher).subscribe(data => {
+      this.showToast(data.msg);
       this.loadVouchers();
     });
    }
