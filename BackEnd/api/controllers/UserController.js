@@ -365,4 +365,9 @@ module.exports.postUserVoucher= async function (req, res, next) {
                 console.log("Successfully added");
         }
   })
+  return res.status(200).json({
+    err: null,
+    msg: "User was updated successfully.",
+    data: req.body
+  });
   };
