@@ -12,7 +12,7 @@ exports.config = {
     'browserName': 'chrome'
   },
   directConnect: true,
-  baseUrl: 'http://localhost:4200/',
+  baseUrl: 'https://waterapp-server.mybluemix.net/',
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,
