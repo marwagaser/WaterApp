@@ -87,8 +87,8 @@ module.exports.getCurrentPoints = function(req, res, next) {
     res.status(200).json({
       err: null,
       msg: "Current user points retrieved successfully.",
-      data: user.points,
-      name: user.name
+      data: req.decodedToken.user.points,
+      name: req.decodedToken.user.name
     });
   });
 };
@@ -336,8 +336,7 @@ module.exports.updateUserPassword = function(req, res, next) {
 // });
 //};
 
-module.exports.postUserVoucher= async function (req, res, next) {
-
+module.exports.postUserVoucher = async function(req, res, next) {
   // res=res.header('Access-Control-Allow-Origin', '*');
   // res=res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
   //res=res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
@@ -370,7 +369,7 @@ module.exports.postUserVoucher= async function (req, res, next) {
     msg: "User was updated successfully.",
     data: req.body
   });
-  };
+};
 
   module.exports.updateUserPoints =  function(req, res, next) {
     console.log('New Points');
