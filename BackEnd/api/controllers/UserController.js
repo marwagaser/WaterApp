@@ -114,6 +114,29 @@ module.exports.getVouchers = function(req, res, next) {
   });
 };
 
+module.exports.getUserVouchers= function(req,res,next){
+
+
+  User.findById(req.decodedToken.user._id).exec(function(err,user){
+
+if(err){
+  return next(err);
+}
+return res.status(200).json({
+  err: null,
+  msg:"vouchers retrieved ",
+  data: user.vouchers
+
+});
+
+  });
+
+
+
+
+
+}
+
 /**
  * Updates username of user
  * @param {string} username
