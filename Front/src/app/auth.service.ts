@@ -4,7 +4,8 @@ import { environment } from "../environments/environment";
 //import { map } from "rxjs/operators";
 import "rxjs/add/operator/map";
 import { AlertController } from "@ionic/angular";
-import { map } from '../../node_modules/rxjs/operators';
+import { map } from "../../node_modules/rxjs/operators";
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: "root"
@@ -12,7 +13,11 @@ import { map } from '../../node_modules/rxjs/operators';
 export class AuthService {
   public token: string;
   public authorized: boolean;
-  constructor(private http: Http, private alertController: AlertController) {
+  constructor(
+    private http: Http,
+    private alertController: AlertController,
+    private _router: Router
+  ) {
     if (this.token) {
       this.authorized = true;
     } else {
@@ -46,6 +51,7 @@ export class AuthService {
     this.token = null;
     window.localStorage.setItem("token", null);
     window.localStorage.removeItem("token");
+    this._router.navigate(["/login"]);
   }
   signOut() {
     // return this.http.get(environment.apiUrl + "/logout");
@@ -68,7 +74,6 @@ export class AuthService {
   }
 
   postUserVoucher(voucherID) {
-    
     var headers = new Headers();
     headers.append("Authorization", "Bearer " + this.getAuthorizationToken());
     headers.append("Content-Type", "application/json");
@@ -84,13 +89,26 @@ export class AuthService {
     headers.append("Authorization", "Bearer " + this.getAuthorizationToken());
     headers.append("Content-Type", "application/json");
     return this.http
-    .post(environment.apiUrl + "/user/updateUserPoints", {price: voucher},
-      {
-        headers
-      })
+      .post(
+        environment.apiUrl + "/user/updateUserPoints",
+        { price: voucher },
+        {
+          headers
+        }
+      )
       .pipe(map(response => response.json()));
   }
 
+  getUserVouchers() {
+    var headers = new Headers();
+    headers.append("Authorization", "Bearer " + this.getAuthorizationToken());
+    headers.append("Content-Type", "application/json");
+    return this.http
+      .get(environment.apiUrl + "/user/getUserVouchers", {
+        headers
+      })
+      .map(res => res.json());
+  }
   updateInfo(UserOb) {
     // var headers = new Headers();
     // headers.append("content-type", "application/json");

@@ -57,6 +57,10 @@ export class Tab4Page implements OnInit, OnChanges {
         this.animations.push(prop);
       }
     }
+    this._authService.getPoints().subscribe((res: any) => {
+      this.current = res.data;
+      this.clientName = res.name;
+    });
   }
   ngOnInit() {
     this._authService.getPoints().subscribe((res: any) => {

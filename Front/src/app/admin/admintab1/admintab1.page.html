@@ -5,7 +5,7 @@
 </ion-header>
 <ion-content>
   <br />
-  {{date | date: 'dd/MM/yyyy'}}
+  {{ date | date: "dd/MM/yyyy" }}
   <br />
   <form [formGroup]="readingForm">
     <ion-item>
@@ -42,7 +42,8 @@
       <ion-input
         type="number"
         formControlName="buildingNumber"
-        [(ngModel)]="building" onkeydown="javascript: return event.keyCode === 8 || event.keyCode === 46 ? true : !isNaN(Number(event.key))"
+        [(ngModel)]="building"
+        onkeydown="javascript: return event.keyCode === 8 || event.keyCode === 46 ? true : !isNaN(Number(event.key))"
       ></ion-input>
     </ion-item>
     <ion-text
@@ -85,53 +86,59 @@
       Region is required
     </ion-text>
 
-        <ion-text
-          color="danger"
-          *ngIf="
-            readingForm.get('region').errors?.pattern &&
-            readingForm.get('region').touched &&
-            !readingForm.get('region').errors?.required
-          "
-        >
-          Region should be alphanumeric.
-        </ion-text>
+    <ion-text
+      color="danger"
+      *ngIf="
+        readingForm.get('region').errors?.pattern &&
+        readingForm.get('region').touched &&
+        !readingForm.get('region').errors?.required
+      "
+    >
+      Region should be alphanumeric.
+    </ion-text>
 
-        <ion-text
-          color="danger"
-          *ngIf="
-            readingForm.get('region').errors?.minlength &&
-            readingForm.get('region').touched &&
-            !readingForm.get('region').errors?.pattern &&
-            !readingForm.get('region').errors?.required
-          "
-        >
-          Region is too short.
-        </ion-text>
-<!-- end of region -->
-<br/>
-<ion-item>
-  <ion-label position="floating">Reading</ion-label>
-  <ion-input
-    type="number"
-    formControlName="reading"
-    [(ngModel)]="reading" onkeydown="javascript: return event.keyCode === 8 || event.keyCode === 46 ? true : !isNaN(Number(event.key))"
-  ></ion-input>
-</ion-item>
-<ion-text
-  color="danger"
-  *ngIf="
-    readingForm.get('reading').errors?.required &&
-    readingForm.get('reading').touched
-  "
->
-  Reading is required
-</ion-text>
+    <ion-text
+      color="danger"
+      *ngIf="
+        readingForm.get('region').errors?.minlength &&
+        readingForm.get('region').touched &&
+        !readingForm.get('region').errors?.pattern &&
+        !readingForm.get('region').errors?.required
+      "
+    >
+      Region is too short.
+    </ion-text>
+    <!-- end of region -->
+    <br />
+    <ion-item>
+      <ion-label position="floating">Reading</ion-label>
+      <ion-input
+        type="number"
+        formControlName="reading"
+        [(ngModel)]="reading"
+        onkeydown="javascript: return event.keyCode === 8 || event.keyCode === 46 ? true : !isNaN(Number(event.key))"
+      ></ion-input>
+    </ion-item>
+    <ion-text
+      color="danger"
+      *ngIf="
+        readingForm.get('reading').errors?.required &&
+        readingForm.get('reading').touched
+      "
+    >
+      Reading is required
+    </ion-text>
 
     <br />
     <br />
     <br />
 
-    <ion-button expand="block" color="success" (click)="onReading()">Add Reading</ion-button>
+    <ion-button expand="block" color="success" (click)="onReading()"
+      >Add Reading</ion-button
+    >
+    <br />
+    <ion-button expand="block" color="danger" (click)="logout()"
+      >Logout</ion-button
+    >
   </form>
-
 </ion-content>

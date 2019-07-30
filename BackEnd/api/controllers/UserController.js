@@ -7,6 +7,7 @@ var mongoose = require("mongoose"),
   path = require("path"),
   User = mongoose.model("User");
   Voucher = mongoose.model("Voucher");
+
 var bodyParser = require("body-parser");
 const express = require("express");
 var app = express();
@@ -86,8 +87,8 @@ module.exports.getCurrentPoints = function(req, res, next) {
     res.status(200).json({
       err: null,
       msg: "Current user points retrieved successfully.",
-      data: user.points,
-      name: user.name
+      data: req.decodedToken.user.points,
+      name: req.decodedToken.user.name
     });
   });
 };
@@ -358,8 +359,7 @@ module.exports.updateUserPassword = function(req, res, next) {
 // });
 //};
 
-module.exports.postUserVoucher= async function (req, res, next) {
-
+module.exports.postUserVoucher = async function(req, res, next) {
   // res=res.header('Access-Control-Allow-Origin', '*');
   // res=res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
   //res=res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
@@ -377,7 +377,9 @@ module.exports.postUserVoucher= async function (req, res, next) {
   }
   
   
-  User.findByIdAndUpdate({_id: req.decodedToken.user._id}, { $push : {vouchers: req.body}},
+  User.findByIdAndUpdate({_id: req.decodedToken.user._id},
+     { $push : {
+    vouchers: req.body}},
      function ( err ) {
         if(err){
                 console.log(err);
@@ -390,7 +392,7 @@ module.exports.postUserVoucher= async function (req, res, next) {
     msg: "User was updated successfully.",
     data: req.body
   });
-  };
+};
 
   module.exports.updateUserPoints =  function(req, res, next) {
     console.log('New Points');
@@ -413,3 +415,24 @@ module.exports.postUserVoucher= async function (req, res, next) {
         });
       });
     };
+
+    module.exports.getUserVouchers= function(req,res,next){
+
+
+      User.findById(req.decodedToken.user._id).exec(function(err,user){
+    
+    if(err){
+      return next(err);
+    }
+    return res.status(200).json({
+      err: null,
+      msg:"vouchers retrieved ",
+      data: user.vouchers
+    
+    });
+    
+      });
+    
+    
+    }
+    
