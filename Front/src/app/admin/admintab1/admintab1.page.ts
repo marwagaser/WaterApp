@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validator, Validators } from "@angular/forms";
+import { AdminService } from "../../services/admin.service";
 @Component({
   selector: "app-admintab1",
   templateUrl: "./admintab1.page.html",
@@ -15,9 +16,7 @@ export class Admintab1Page implements OnInit {
     WMID: ["", [Validators.required, Validators.pattern("^[a-zA-Z0-9]*$")]],
     buildingNumber: [
       null,
-      [Validators.required,
-      Validators.min(1),
-      Validators.max(999)]
+      [Validators.required, Validators.min(1), Validators.max(999)]
     ],
     region: [
       "",
@@ -29,17 +28,28 @@ export class Admintab1Page implements OnInit {
     ],
     reading: [null, [Validators.required]]
   });
-  constructor(private formB: FormBuilder) {}
+  constructor(
+    private formB: FormBuilder,
+    private _adminService: AdminService
+  ) {}
 
-onReading(){
-var readingObj = {
-    WMID: this.WMID,
-    buildingNumber: this.building,
-    region: this.region,
-    date: this.date,
-    reading: this.reading
+  onReading() {
+    var readingObj = {
+      wmid: this.WMID,
+      buildingID: this.building,
+      regionName: this.region,
+      reading: this.reading
+    };
+    this._adminService.sendReading(readingObj).subscribe(
+      data => {
+        console.log(data);
+      },
+      error => {
+        console.log("marwa");
+        console.log(error);
+      }
+    );
+    console.log(readingObj);
   }
-console.log(readingObj)
-}
   ngOnInit() {}
 }

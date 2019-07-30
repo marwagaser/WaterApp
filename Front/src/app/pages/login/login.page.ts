@@ -68,6 +68,10 @@ export class LoginPage implements OnInit {
             password: ["", [Validators.required]]
           });
           this._router.navigate(["/tabs"]);
+          if (res.username1 == "admin") {
+            this._router.navigate(["/admintabss"]);
+          }
+          console.log(JSON.stringify(res));
         },
         (err: any) => {
           console.log(err);

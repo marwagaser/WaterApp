@@ -145,7 +145,12 @@ module.exports.login = function(req, res, next) {
         }
       );
       // Send the JWT to the frontend
-      res.status(200).json({ err: null, msg: "Welcome", data: token });
+      res.status(200).json({
+        err: null,
+        msg: "Welcome",
+        data: token,
+        username: user.username
+      });
     }
 
     // If user found then check that the password he entered matches the encrypted hash in the database
