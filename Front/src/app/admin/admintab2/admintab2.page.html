@@ -1,7 +1,26 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Add Voucher</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content> Rana's content here</ion-content>
+<ion-content>
+  <ion-fab vertical="center" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="addVoucher()">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    
+    <div class="ion-padding" *ngFor = "let voucher of vouchers | async"> 
+      
+        <ion-card color="dark">
+            <ion-card-header>
+              <ion-card-subtitle>Voucher</ion-card-subtitle>
+              <ion-card-title >{{voucher.title}}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                {{voucher.offer}}   </ion-card-content> 
+              <ion-item color=grey>
+                  <ion-icon name="pricetags" slot="start"></ion-icon>
+                  <ion-label> {{voucher.price}}</ion-label>
+                  <button ion-button icon-end color="primary" clear (click)="presentConfirm(voucher)"item-end>
+                    <ion-icon size="large" name="trash"></ion-icon>
+                  </button>
+                </ion-item></ion-card>
+    </div>
+    
+    </ion-content>
