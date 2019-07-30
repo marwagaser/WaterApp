@@ -4,7 +4,7 @@
 
 export const environment = {
   production: true,
-  apiUrl: 'https://waterapp-server.mybluemix.net/'
+  apiUrl: 'https://waterapp-server.mybluemix.net/api'
 };
 
 /*
