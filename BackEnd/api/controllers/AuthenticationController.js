@@ -94,7 +94,8 @@ module.exports.register = function(req, res, next) {
 							err: null,
 							msg:
 								"Registration successful, you can now login to your account.",
-							data: req.body
+							data: req.body,
+							username: newUser.username
 						});
 
 					});	
