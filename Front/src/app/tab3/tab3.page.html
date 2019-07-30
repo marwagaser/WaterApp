@@ -1,7 +1,27 @@
 <ion-header>
-    <ion-toolbar color="dark">
-      <ion-title>
-        Promocodes
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar color="dark">
+    <ion-title>
+      Vouchers
+    </ion-title>
+    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+<div class="ion-padding" *ngFor = "let voucher of vouchers"> 
+    <ion-card color=success >
+        <ion-card-header>
+          <ion-card-subtitle>Promocode</ion-card-subtitle>
+          <ion-card-title color="grey">{{voucher.promocode}}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            {{voucher.offer}}   </ion-card-content> 
+          <ion-item color=grey>
+              <ion-icon name="pricetags" slot="start"></ion-icon>
+              <ion-label> {{voucher.title}}</ion-label>
+            </ion-item></ion-card>
+</div>
+
+</ion-content>

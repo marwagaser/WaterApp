@@ -91,6 +91,16 @@ export class AuthService {
       .pipe(map(response => response.json()));
   }
 
+  getUserVouchers() {
+    var headers = new Headers();
+    headers.append("Authorization", "Bearer " + this.getAuthorizationToken());
+    headers.append("Content-Type", "application/json");
+    return this.http
+      .get(environment.apiUrl + "/user/getUserVouchers", {
+        headers
+      })
+      .map(res => res.json());
+  }
   updateInfo(UserOb) {
     // var headers = new Headers();
     // headers.append("content-type", "application/json");

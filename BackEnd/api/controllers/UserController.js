@@ -7,6 +7,7 @@ var mongoose = require("mongoose"),
   path = require("path"),
   User = mongoose.model("User");
   Voucher = mongoose.model("Voucher");
+
 var bodyParser = require("body-parser");
 const express = require("express");
 var app = express();
@@ -354,7 +355,9 @@ module.exports.postUserVoucher= async function (req, res, next) {
   }
   
   
-  User.findByIdAndUpdate({_id: req.decodedToken.user._id}, { $push : {vouchers: req.body}},
+  User.findByIdAndUpdate({_id: req.decodedToken.user._id},
+     { $push : {
+    vouchers: req.body}},
      function ( err ) {
         if(err){
                 console.log(err);
@@ -390,3 +393,24 @@ module.exports.postUserVoucher= async function (req, res, next) {
         });
       });
     };
+
+    module.exports.getUserVouchers= function(req,res,next){
+
+
+      User.findById(req.decodedToken.user._id).exec(function(err,user){
+    
+    if(err){
+      return next(err);
+    }
+    return res.status(200).json({
+      err: null,
+      msg:"vouchers retrieved ",
+      data: user.vouchers
+    
+    });
+    
+      });
+    
+    
+    }
+    
