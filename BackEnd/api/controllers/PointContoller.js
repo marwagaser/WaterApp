@@ -25,13 +25,13 @@ console.log("points calculated");
  var res = building.numResidents;
  console.log("residents number",res);
  var pointsRewarded=0;
- var calc = (reading-(avg*res))/10;
+ var calc = reading-(avg*res);
  if(calc <= 0){
     pointsRewarded =0;
  }
 
  else{
-     pointsRewarded= parseInt(calc/10);
+     pointsRewarded= parseInt(calc);
  }
 
  console.log("points to give",pointsRewarded);
@@ -49,7 +49,9 @@ for(i=0;i<users.length;i++){
     }
     console.log("pointddddd",point)
     Point.create(point);
+    User.findByIdAndUpdate ({_id: users[i]._id},{$inc:{"points": + pointsRewarded}}).exec();
 }
+
 
 
 

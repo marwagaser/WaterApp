@@ -6,6 +6,8 @@ var mongoose = require("mongoose"),
   cloudinaryStorage = require("multer-storage-cloudinary"),
   path = require("path"),
   WaterMeter = mongoose.model("WaterMeter");
+  Building = mongoose.model("Building");
+  Region = mongoose.model("Region");
   userCtrl = require("../controllers/UserController");
   pointCtrl = require("../controllers/PointContoller");
 var bodyParser = require("body-parser");
@@ -20,6 +22,34 @@ if(req.decodedToken.user.username !== "admin"){
     .json({ err: null, msg: "You have no access to that feature", data: null });
 
 };
+
+Building.findOne({buildingID:req.body.buildingID},function(err,building){
+    if(err){
+       // return next(err);
+    }
+    if(!building){
+        return res
+    .status(404)
+    .json({ err: null, msg: "Building Not Found", data: null });
+
+    }
+  
+
+});
+
+Region.findOne({regionName:req.body.regionName},function(err,region){
+    if(err){
+       // return next(err);
+    }
+    if(!region){
+        return res
+    .status(404)
+    .json({ err: null, msg: "Region Not Found", data: null });
+
+    }
+  
+
+});
 
 console.log("ahlan admin");
 
