@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 const CONFIG = {
-  apiUrl: 'http://127.0.0.1:3000/',
+  apiUrl: 'https://waterapp-server.mybluemix.net/',
 };
 @Injectable()
 export class AppSettings {

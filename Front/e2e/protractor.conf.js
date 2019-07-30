@@ -12,7 +12,7 @@ exports.config = {
     'browserName': 'chrome'
   },
   directConnect: true,
-  baseUrl: 'http://localhost:4200/',
+  baseUrl: 'https://thewaterappforibm-sleepy-oribi.eu-gb.mybluemix.net/login',
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,
