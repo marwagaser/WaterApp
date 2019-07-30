@@ -368,3 +368,25 @@ module.exports.postUserVoucher= async function (req, res, next) {
     data: req.body
   });
   };
+
+  module.exports.updateUserPoints =  function(req, res, next) {
+    console.log('New Points');
+      var priceofvoucher = req.body.price
+    
+      User.findByIdAndUpdate(
+        {_id:req.decodedToken.user._id},
+        {
+          $inc: { "points":  -  priceofvoucher}
+        }
+      ).exec(function(err, updatedUser) {
+        console.log("Hello");
+        if (err) {
+          return next(err);
+        }
+    
+        return res.status(200).json({
+          msg: "User was updated successfully.",
+          data: updatedUser
+        });
+      });
+    };

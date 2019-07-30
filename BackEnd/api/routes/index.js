@@ -84,6 +84,11 @@ router.post(
   userCtrl.updateUserPassword
 );
 router.post(
+  "/user/updateUserPoints/",
+  isAuthenticated,
+  userCtrl.updateUserPoints
+);
+router.post(
   "/user/postUserVoucher/",
   isAuthenticated,
   userCtrl.postUserVoucher
