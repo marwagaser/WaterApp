@@ -6,7 +6,8 @@ var mongoose = require("mongoose"),
   cloudinaryStorage = require("multer-storage-cloudinary"),
   path = require("path"),
   User = mongoose.model("User");
-Voucher = mongoose.model("Voucher");
+  Voucher = mongoose.model("Voucher");
+
 var bodyParser = require("body-parser");
 const express = require("express");
 var app = express();
@@ -340,29 +341,29 @@ module.exports.postUserVoucher = async function(req, res, next) {
   // res=res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH,OPTIONS');
   //res=res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
 
-  console.log(req.body.price);
-
-  var newVoucher = {
-    companyID: req.body.companyID,
-    voucherID: req.body.voucherID,
-    title: req.body.title,
-    offer: req.body.offer,
-    price: req.body.price,
-    promocode: req.body.promocode,
-    status: req.body.status
-  };
-
-  User.findByIdAndUpdate(
-    { _id: req.decodedToken.user._id },
-    { $push: { vouchers: req.body } },
-    function(err) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("Successfully added");
-      }
-    }
-  );
+    console.log(req.body.price);
+    
+    var newVoucher = {
+      companyID: req.body.companyID, 
+      voucherID: req.body.voucherID,
+      title: req.body.title,
+      offer: req.body.offer,
+      price: req.body.price,
+      promocode: req.body.promocode,
+      status: req.body.status
+  }
+  
+  
+  User.findByIdAndUpdate({_id: req.decodedToken.user._id},
+     { $push : {
+    vouchers: req.body}},
+     function ( err ) {
+        if(err){
+                console.log(err);
+        }else{
+                console.log("Successfully added");
+        }
+  })
   return res.status(200).json({
     err: null,
     msg: "User was updated successfully.",
@@ -370,24 +371,45 @@ module.exports.postUserVoucher = async function(req, res, next) {
   });
 };
 
-module.exports.updateUserPoints = function(req, res, next) {
-  console.log("New Points");
-  var priceofvoucher = req.body.price;
+  module.exports.updateUserPoints =  function(req, res, next) {
+    console.log('New Points');
+      var priceofvoucher = req.body.price
+    
+      User.findByIdAndUpdate(
+        {_id:req.decodedToken.user._id},
+        {
+          $inc: { "points":  -  priceofvoucher}
+        }
+      ).exec(function(err, updatedUser) {
+        console.log("Hello");
+        if (err) {
+          return next(err);
+        }
+    
+        return res.status(200).json({
+          msg: "User was updated successfully.",
+          data: updatedUser
+        });
+      });
+    };
 
-  User.findByIdAndUpdate(
-    { _id: req.decodedToken.user._id },
-    {
-      $inc: { points: -priceofvoucher }
-    }
-  ).exec(function(err, updatedUser) {
-    console.log("Hello");
-    if (err) {
+    module.exports.getUserVouchers= function(req,res,next){
+
+
+      User.findById(req.decodedToken.user._id).exec(function(err,user){
+    
+    if(err){
       return next(err);
     }
-
     return res.status(200).json({
-      msg: "User was updated successfully.",
-      data: updatedUser
+      err: null,
+      msg:"vouchers retrieved ",
+      data: user.vouchers
+    
     });
-  });
-};
+    
+      });
+    
+    
+    }
+    

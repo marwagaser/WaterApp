@@ -17,7 +17,9 @@ export class Tab3Page {
      this.loadVouchers();
    }
    loadVouchers() {
-     this.vouchers = this.voucherService.getVouchers();
+      this.authService.getUserVouchers().subscribe(data => {
+       this.vouchers = data.data;
+     });
    }
    async addVoucher() {
      const prompt = await this.alertCtrl.create({

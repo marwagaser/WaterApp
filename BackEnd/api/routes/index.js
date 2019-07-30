@@ -70,10 +70,17 @@ router.post("/auth/login", isNotAuthenticated, authCtrl.login);
 
 router.get("/user/getUsers", userCtrl.getUsers);
 router.get(
+  "/user/getUserVouchers",
+  isAuthenticated,
+  userCtrl.getUserVouchers
+);
+
+router.get(
   "/user/getCurrentPoints",
   isAuthenticated,
   userCtrl.getCurrentPoints
 );
+
 router.post("/user/updateUsername", isAuthenticated, userCtrl.updateUsername);
 router.post("/user/updateName", isAuthenticated, userCtrl.updateName);
 router.post(
