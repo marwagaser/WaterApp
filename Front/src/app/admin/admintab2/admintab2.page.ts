@@ -27,7 +27,7 @@ export class Admintab2Page {
    }
    removeVoucher(id) {
     this.voucherService.deleteVoucher(id).subscribe(data => {
-      this.showToast(data.msg);
+      this.showToast("Succesfuly deleted the voucher!");
       this.loadVouchers();
     });
   }
