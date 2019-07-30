@@ -5,7 +5,9 @@ const waterMeterSchema = mongoose.Schema({
     type: String,
     required: true,
     trim: true,
-    lowercase: true
+    lowercase: true,
+    unique:false
+
   },
   reading: {
     type: Number,
@@ -14,7 +16,7 @@ const waterMeterSchema = mongoose.Schema({
   },
   readingDate: {
     type: Date,
-    required:true,
+    default: Date.now
   },
   createdAt: {
     type: Date,

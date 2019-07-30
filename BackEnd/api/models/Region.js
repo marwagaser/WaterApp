@@ -1,45 +1,24 @@
 const mongoose = require('mongoose');
-const BuildingSchema = mongoose.Schema({ 
-    
-    buildingID:{
-        type: Number,
-        required: true,
-        min: 1
-    },
-    numResidents:{
-        type: Number,
-        required: true,
-        min:0
-    },
-
-    wmid:{
-        type: String,
-        required: true,
-    },
-
-});
+var building =mongoose.Schema.Types.Building;
   
 const regionSchema = mongoose.Schema({
   regionName: {
     type: String,
     required: true,
     trim: true,
-    lowercase: true
-
+    lowercase: true,
+    unique: true
   },
-  regionID: {
-    type: Number,
-    required: true
-    
-  },
+  
   avConsumption: {
     type: Number,
     required: true
   },
 
   buildings: {
-    type: [BuildingSchema],
-    required: true
+    type: [building],
+   // required: true
+   default:[]
   },
 
   createdAt: {

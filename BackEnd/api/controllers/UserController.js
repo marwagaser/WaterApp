@@ -354,9 +354,7 @@ module.exports.postUserVoucher= async function (req, res, next) {
   }
   
   
-  User.findByIdAndUpdate({_id: req.decodedToken.user._id},
-     { $push : {
-    vouchers: req.body}},
+  User.findByIdAndUpdate({_id: req.decodedToken.user._id}, { $push : {vouchers: req.body}},
      function ( err ) {
         if(err){
                 console.log(err);

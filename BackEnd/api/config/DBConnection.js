@@ -75,4 +75,5 @@ require("../models/Point");
 require("../models/Region");
 require("../models/Sponsor");
 require("../models/Voucher");
+require("../models/Building");
 require("../models/WaterMeter");

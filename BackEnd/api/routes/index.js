@@ -16,6 +16,9 @@ cloudinary.config({
 (userCtrl = require("../controllers/UserController")),
   (sponsorCtrl = require("../controllers/SponsorController")),
   (voucherCtrl = require("../controllers/VoucherController")),
+  (wmCtrl= require("../controllers/WaterMeterController")),
+  (regionCtrl = require("../controllers/RegionController")),
+  (buildingCtrl = require("../controllers/BuildingController")),
   (authCtrl = require("../controllers/AuthenticationController"));
 
 var multer = require("multer");
@@ -85,6 +88,7 @@ router.post(
   isAuthenticated,
   userCtrl.postUserVoucher
 );
+
 // router.get(
 //   "/user/getVouchers",
 //   isAuthenticated,
@@ -106,6 +110,15 @@ router.get("/voucher/get", voucherCtrl.getVouchers);
 router.post("/voucher/post", voucherCtrl.postVoucher);
 router.delete("/voucher/delete/:_id", voucherCtrl.deleteVoucher);
 router.get("/voucher/get/:_id", voucherCtrl.findVoucher);
+
+router.post("/wm/insertReading",isAuthenticated,wmCtrl.insertReading);
+
+router.post("/region/getAverage",isAuthenticated,regionCtrl.getAverage);
+router.post("/region/create",isAuthenticated,regionCtrl.addRegion);
+router.post("/region/buildingRes",isAuthenticated, regionCtrl.getResidents);
+router.post("/building/create",isAuthenticated,buildingCtrl.createBuilding);
+router.post("/region/addbuilding",isAuthenticated,regionCtrl.addBuildingtoRegion);
+router.post("/building/residents",isAuthenticated,buildingCtrl.getResidents);
 
 /*productCtrl = require('../controllers/ProductController');
   
