@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validator, Validators } from "@angular/forms";
 import { AdminService } from "../../services/admin.service";
+import { AuthService } from "../../auth.service";
 @Component({
   selector: "app-admintab1",
   templateUrl: "./admintab1.page.html",
@@ -30,7 +31,8 @@ export class Admintab1Page implements OnInit {
   });
   constructor(
     private formB: FormBuilder,
-    private _adminService: AdminService
+    private _adminService: AdminService,
+    private _authService: AuthService
   ) {}
 
   onReading() {
@@ -45,11 +47,17 @@ export class Admintab1Page implements OnInit {
         console.log(data);
       },
       error => {
-        console.log("marwa");
         console.log(error);
       }
     );
     console.log(readingObj);
+    this.WMID = "";
+    this.building = null;
+    this.region = "";
+    this.reading = null;
+  }
+  logout() {
+    this._authService.logout();
   }
   ngOnInit() {}
 }
