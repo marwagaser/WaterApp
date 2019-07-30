@@ -68,13 +68,16 @@ End with an example of getting some data out of the system or using it for a lit
 
 
 ## Deployment
+
+Deploy on IBM cloud.
 '''
 ibmcloud target --cf -o [ORGNAME] -s [SPACE] -r [REGION]
 '''
+
 '''
 ibmcloud cd push <rewaTer>
 '''
-Add additional notes about how to deploy this on a live system
+
 
 
 ## Built With
