@@ -16,14 +16,14 @@ var mongoose = require("mongoose"),
 
 
   module.exports.calculatePoints= async(regionName, buildingID,reading) => {
-console.log("points calculated");
+
 
  var reg= await Region.findOne({regionName: regionName}).exec();
  var avg= reg.avConsumption;
- console.log("average in region",avg);
+
  var building = await Building.findOne({buildingID: buildingID}).exec();
  var res = building.numResidents;
- console.log("residents number",res);
+
  var pointsRewarded=0;
  var calc = reading-(avg*res);
  if(calc <= 0){
@@ -34,20 +34,19 @@ console.log("points calculated");
      pointsRewarded= parseInt(calc);
  }
 
- console.log("points to give",pointsRewarded);
  
 var users = await User.find({region: regionName,building: buildingID}).exec();
 
 for(i=0;i<users.length;i++){
     var un = users[i].username;
     var num= users[i].points +pointsRewarded;
-    console.log(users[i].points)
+    
     var point = {
         username: un,
         noPoints: num
 
     }
-    console.log("pointddddd",point)
+    
     Point.create(point);
     User.findByIdAndUpdate ({_id: users[i]._id},{$inc:{"points": + pointsRewarded}}).exec();
 }

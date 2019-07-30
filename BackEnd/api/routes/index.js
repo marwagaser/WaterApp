@@ -21,9 +21,7 @@ cloudinary.config({
   (buildingCtrl = require("../controllers/BuildingController")),
   (authCtrl = require("../controllers/AuthenticationController"));
 
-var multer = require("multer");
-var MongoClient = require("mongodb").MongoClient;
-var assert = require("assert");
+
 router.get("/", function(req, res, next) {
   res.send("Server");
 });
@@ -94,11 +92,6 @@ router.post(
   userCtrl.postUserVoucher
 );
 
-// router.get(
-//   "/user/getVouchers",
-//   isAuthenticated,
-//   userCtrl.getVouchers
-// );
 
 router.get(
   "/company/getCompany/:companyId",
@@ -125,17 +118,5 @@ router.post("/building/create",isAuthenticated,buildingCtrl.createBuilding);
 router.post("/region/addbuilding",isAuthenticated,regionCtrl.addBuildingtoRegion);
 router.post("/building/residents",isAuthenticated,buildingCtrl.getResidents);
 
-/*productCtrl = require('../controllers/ProductController');
-  
-//-------------------------------Product Routes-----------------------------------
-router.get('/product/getProducts', asyncMiddleware(productCtrl.getProducts));
-router.get('/product/getProduct/:productId', asyncMiddleware(productCtrl.getProduct));
-router.get(
-  '/product/getProductsBelowPrice/:price',
-  asyncMiddleware(productCtrl.getProductsBelowPrice)
-);
-router.post('/product/createProduct', asyncMiddleware(productCtrl.createProduct));
-router.patch('/product/updateProduct/:productId', asyncMiddleware(productCtrl.updateProduct));
-router.delete('/product/deleteProduct/:productId', asyncMiddleware(productCtrl.deleteProduct));
-*/
+
 module.exports = router;

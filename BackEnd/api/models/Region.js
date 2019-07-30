@@ -17,7 +17,6 @@ const regionSchema = mongoose.Schema({
 
   buildings: {
     type: [building],
-   // required: true
    default:[]
   },
 

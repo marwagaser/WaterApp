@@ -1,17 +1,11 @@
 var mongoose = require("mongoose"),
-  moment = require("moment"),
-  Validations = require("../utils/Validations"),
-  cloudinary = require("cloudinary"),
-  multer = require("multer"),
-  cloudinaryStorage = require("multer-storage-cloudinary"),
-  path = require("path"),
+ 
   Building = mongoose.model("Building");
-var bodyParser = require("body-parser");
-const express = require("express");
+
 
 
 module.exports.createBuilding= function(req,res,next){
-    console.log("aywann");
+  
     Building.create(req.body, function(err, build) {
         if (err) {
         return next(err);
@@ -30,7 +24,7 @@ module.exports.createBuilding= function(req,res,next){
 }
 
 module.exports.getResidents = function(req,res,next){
-console.log("buildkiebvi");
+
     Building.findOne({buildingID: req.body.buildingID},function(err,building){
 
         if(err){

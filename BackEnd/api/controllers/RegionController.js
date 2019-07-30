@@ -1,14 +1,8 @@
 var mongoose = require("mongoose"),
-  moment = require("moment"),
-  Validations = require("../utils/Validations"),
-  cloudinary = require("cloudinary"),
-  multer = require("multer"),
-  cloudinaryStorage = require("multer-storage-cloudinary"),
-  path = require("path"),
+
   Region = mongoose.model("Region");
   Building = mongoose.model("Building");
-var bodyParser = require("body-parser");
-const express = require("express");
+
 
 
 
@@ -20,12 +14,12 @@ if(!b){
     .status(404)
     .json({ err: null, msg: 'Building not found.', data: null });
 }
-console.log(b);
+
 
 Region.findOneAndUpdate( {regionName: req.body.regionName}, { $push : {buildings: b}},
     function ( err,reg ) {
        if(err){
-               console.log(err);
+               
        }
        if(!reg){
         return res
@@ -41,7 +35,7 @@ Region.findOneAndUpdate( {regionName: req.body.regionName}, { $push : {buildings
 };
 
 module.exports.addRegion = function(req,res,next){
-console.log("got here");
+
 
     Region.create(req.body, function(err, reg) {
         if (err) {
@@ -96,24 +90,14 @@ module.exports.getAverage = function(req,res,next){
 };
 
     module.exports.getResidents= function(req,res,next){
-        console.log("yep yep");
-       /* Region.findOne({regionName:req.body.regionName},function(err,region){
-            if(err){
-                return next(err);
-            }
+  
 
-            if(!region){
-                return res
-                .status(404)
-                .json({ err: null, msg: 'Region not found.', data: null });
-            }
-        )};*/
             Region.aggregate([
                 {$unwind: "$buildings"},
                 {$match: {"building.buildingID": req.buildingID}}],
                 function(err,result){
                     
-                    console.log("aggregate trial",result);
+                  
             });
              
             Region.findOne({
@@ -129,7 +113,7 @@ module.exports.getAverage = function(req,res,next){
                     .status(404)
                     .json({ err: null, msg: 'Region not found.', data: null });
                 }
-                console.log("region found ", region);
+              
                 return res.status(201).json({
                     err: null,
                     msg:"retrieved",
@@ -143,9 +127,6 @@ module.exports.getAverage = function(req,res,next){
     
 
 
-
-
-        //});
 
 
 
