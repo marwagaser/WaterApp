@@ -26,7 +26,7 @@
     "nodemailer": "^4.6.4",
     "npm": "^6.10.1",
     "should": "^1.3.0",
-    "socket.io": "^2.1.0",
+    "socket.io": "^2.4.0",
     "socket.io-client": "^2.1.0",
     "xoauth2": "^1.2.0"
   }
